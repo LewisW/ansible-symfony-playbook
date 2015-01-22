@@ -1,0 +1,40 @@
+inherit: true
+
+filter:
+    paths: [src/*]
+
+application:
+    type: symfony2
+    environment:
+        mysql: true
+        postgresql: false
+        redis: false
+    dependencies:
+        before:
+            - mysql -uroot -e "CREATE DATABASE project_name"
+
+build:
+    environment:
+        hosts:
+            project_name.dev: '127.0.0.1'
+            www.project_name.dev: '127.0.0.1'
+    project_setup:
+        before:
+            -
+                command: cd /usr/share/selenium/ && sudo wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar
+            -
+                command: java -jar /usr/share/selenium/selenium-server-standalone-2.44.0.jar
+                background: true
+
+    dependencies:
+        before:
+            - sudo apt-get install -y python-setuptools python-dev
+            - ansible/install-dependencies.sh
+            - { command: ansible-playbook ansible/setup.yml -i ansible/inventories/build, idle_timeout: 600 }
+            - { command: ansible-playbook ansible/update.yml -i ansible/inventories/build, idle_timeout: 600 }
+
+    deployment:
+        -
+            branch: master
+            commands:
+                - { command: ansible-playbook ansible/update.yml -i ansible/inventories/prod, idle_timeout: 600 }
