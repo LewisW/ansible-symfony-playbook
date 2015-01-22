@@ -1,5 +1,6 @@
 ---
 - include: http_user.yml
+  when: http_user is not defined
 
 # Deploy it in to a versioned directory
 - include: versioned_deployment.yml
@@ -13,7 +14,7 @@
   sudo: yes
   file: path={{symfony2_release_destination}} owner={{ansible_ssh_user}} group={{http_user}} recurse=yes
   register: command_result
-  when: "'vagrant' not in group_names"
+  when: skip_permissions is not defined
 
 - include: alternative-directories.yml
 

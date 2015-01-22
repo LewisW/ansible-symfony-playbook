@@ -19,7 +19,6 @@
 #  with_items: shared_directories
 
 - name: Enable permission to app folders
-  sudo: yes
   file: path={{item}} mode=2775 recurse=yes state=directory owner={{ansible_ssh_user}} group={{http_user}}
   #when: "acl_check.rc == 1"
   with_items: shared_directories

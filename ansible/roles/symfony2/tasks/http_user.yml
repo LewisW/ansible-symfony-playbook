@@ -2,8 +2,10 @@
 # Work out the HTTP user
 - shell: ps axo user:50,pid,cmd | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d" " -f1
   register: http_user_command
+
 - set_fact: http_user="{{http_user_command.stdout}}"
 
 - name: Add user to www-data group
   sudo: yes
   user: name="{{ ansible_ssh_user }}" groups="www-data" append="yes"
+  when: skip_permissions is not defined

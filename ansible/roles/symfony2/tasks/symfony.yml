@@ -17,9 +17,7 @@
 
 - name: Compile app/config/parameters.yml from parameters.yml
   template: src=parameters.yml.j2 dest={{ symfony2_release_destination }}/app/config/parameters.yml
- # when: not parameters_config.stat.exists
-
-- debug: msg="{% for key, value in parameters.iteritems() %}{% if override_parameters[key] is defined %}{{ override_parameters[key]|to_yaml }}{% else %}"{{ value|to_yaml }}"{% endif %}{% endfor %}"
+  when: not parameters_config.stat.exists
 
 - name: Run composer install
   shell: cd {{ symfony2_release_destination }} && SYMFONY_ENV={{symfony2_project_env}} composer install {{symfony2_project_composer_opts}}

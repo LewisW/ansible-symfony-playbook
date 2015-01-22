@@ -10,11 +10,9 @@
 
 # Create the directories
 - name: Create the root directory.
-  sudo: yes
   file: state=directory owner={{ansible_ssh_user}} group={{http_user}} path={{symfony2_project_root}}
 
 - name: Create the shared directory.
-  sudo: yes
   file: state=directory owner={{ansible_ssh_user}} group={{http_user}} path={{symfony2_project_root}}/shared
 
 - name: Create the shared/app/config directory.
