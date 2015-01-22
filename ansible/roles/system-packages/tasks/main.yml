@@ -1,0 +1,21 @@
+---
+- name: Update apt for today
+  sudo: yes
+  apt: update_cache=yes cache_valid_time=86400
+  when: ansible_os_family == 'Debian'
+
+- name: Add ppa Repository
+  sudo: yes
+  apt_repository: repo={{ item }}
+  with_items: system_repos
+  when: ansible_os_family == 'Debian'
+
+- apt: name={{ item }} state=latest
+  sudo: yes
+  with_items: system_packages
+  when: ansible_os_family == 'Debian'
+
+- yum: name={{ item }} state=latest
+  sudo: yes
+  with_items: system_packages
+  when: ansible_os_family == 'RedHat'

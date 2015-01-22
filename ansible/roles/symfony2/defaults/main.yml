@@ -1,0 +1,13 @@
+---
+# defaults file for symfony2
+
+symfony2_project_release: dev-master
+symfony2_project_branch: master
+symfony2_php_path: php
+
+symfony2_project_env: prod
+
+symfony2_versioned_deployment: true
+symfony2_project_console_opts: ~
+
+override_parameters: {}

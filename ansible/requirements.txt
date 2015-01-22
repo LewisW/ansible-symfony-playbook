@@ -1,0 +1,10 @@
+geerlingguy.apache
+geerlingguy.composer
+geerlingguy.firewall
+geerlingguy.git
+geerlingguy.mysql
+geerlingguy.ntp
+geerlingguy.php
+geerlingguy.php-xdebug
+geerlingguy.repo-epel
+geerlingguy.repo-remi

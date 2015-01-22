@@ -1,0 +1,8 @@
+---
+symfony2_project_source: '{{ playbook_dir }}/../'
+
+symfony2_maintenance_root: "{{symfony2_release_destination}}/maintenance"
+
+symfony2_php_path: /usr/bin/php
+
+symfony2_project_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --optimize-autoloader -n'

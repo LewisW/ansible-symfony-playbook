@@ -1,0 +1,68 @@
+---
+## Local tasks
+#- hosts: all
+#  gather_facts: no
+#  tasks:
+#    - name: Add to local known hosts
+#      local_action: shell ssh-keyscan -t ecdsa,rsa,dsa,rsa1 -p {{ansible_ssh_port|default(22)}} -H {{item}} 2> /dev/null >> ~/.ssh/known_hosts
+#      with_items: play_hosts
+
+# Common on all servers
+- hosts: all
+  sudo: true
+  gather_facts: yes
+
+  vars_files:
+    - vars/ntp.yml
+  roles:
+    # Install the basic server
+    #- geerlingguy.firewall
+    - { role: geerlingguy.ntp, sudo: yes }
+
+# Webservers
+- hosts: webserver
+  gather_facts: yes
+
+  vars_files:
+    - vars/symfony2.yml
+    - vars/apache.yml
+    - vars/packages.yml
+    - vars/ntp.yml
+  roles:
+    # Install the basic server
+    - { role: system-packages }
+    - { role: bash }
+    - { role: geerlingguy.apache, sudo: yes }
+    - { role: geerlingguy.php, sudo: yes }
+    - { role: php-twig, sudo: yes }
+#    - { role: php-extra }
+
+    # Install GIT and add our server to known hosts
+    - { role: geerlingguy.git, sudo: yes }
+    - { role: ssh }
+
+    # Install composer
+    - { role: geerlingguy.composer, sudo: yes }
+  tasks:
+    - sudo: true
+      service: name=beanstalkd state=started
+
+# Vagrant
+- hosts: vagrant
+  sudo: true
+  vars_files:
+    - vars/xdebug.yml
+  roles:
+    - { role: geerlingguy.php }
+    - { role: geerlingguy.php-xdebug }
+
+# Database servers
+- hosts: dbserver
+  sudo: true
+  gather_facts: yes
+
+  vars_files:
+    - ../app/config/parameters.yml.dist
+    - vars/mysql.yml
+  roles:
+    - { role: geerlingguy.mysql }

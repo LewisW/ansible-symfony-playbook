@@ -1,0 +1,58 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Download Twig.
+  get_url:
+    url: "https://github.com/twigphp/Twig/archive/v{{ php_twig_version }}.tar.gz"
+    dest: "{{ workspace }}/twig-{{ php_twig_version }}.tgz"
+
+- name: Untar Twig.
+  command: >
+    tar -C {{ workspace }} -xvzf {{ workspace }}/twig-{{ php_twig_version }}.tgz
+    creates={{ workspace }}/twig-{{ php_twig_version }}/README.rst
+
+- name: Build Twig.
+  shell: >
+    {{ item }}
+    chdir={{ workspace }}/Twig-{{ php_twig_version }}/ext/twig
+    creates={{ workspace }}/Twig-{{ php_twig_version }}/ext/twig/modules/twig.so
+  with_items:
+    - phpize
+    - ./configure
+    - make
+  notify: restart webserver
+
+- name: Ensure Twig module path exists.
+  file:
+    path: "{{ php_twig_module_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Move Twig module into place.
+  shell: >
+    cp {{ workspace }}/Twig-{{ php_twig_version }}/ext/twig/modules/twig.so {{ php_twig_module_path }}/twig.so
+    creates={{ php_twig_module_path }}/twig.so
+  notify: restart webserver
+
+- name: Copy twig INI into php.d folder.
+  template:
+    src: twig.ini.j2
+    dest: "{{ php_extension_conf_path }}/twig.ini"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart webserver
+
+- name: Check for separate cli php conf.d directory.
+  stat: path=/etc/php5/cli/conf.d
+  register: php_cli_path
+
+- name: Symlink twig.ini into separate cli directory if it exists.
+  file:
+    src: "{{ php_extension_conf_path }}/twig.ini"
+    dest: /etc/php5/cli/conf.d/twig.ini
+    state: link
+  when: php_cli_path.stat.isdir is defined and php_cli_path.stat.isdir

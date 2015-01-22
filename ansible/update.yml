@@ -1,0 +1,14 @@
+---
+# Webservers
+- hosts: webserver
+  gather_facts: yes
+
+  vars_files:
+    - ../app/config/parameters.yml.dist
+    - vars/symfony2.yml
+  roles:
+    # Deploy our application
+    - { role: symfony2 }
+
+    # Example of a daemon
+    #- { role: daemonize, daemonize_gid: "{{http_user}}", daemonize_uid: "{{http_user}}", daemonize_command: '{{ symfony2_release_destination }}/app/console transdoc:worker:start -e {{symfony2_project_env}} -q', daemonize_script_name: transdoc-worker }

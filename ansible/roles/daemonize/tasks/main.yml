@@ -1,0 +1,10 @@
+---
+- name: generate upstart scripts
+  sudo: true
+  template: >
+    src=upstart.conf.j2
+    dest=/etc/init/{{ daemonize_script_name }}.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: 'restart upstart-{{ daemonize_script_name }}'

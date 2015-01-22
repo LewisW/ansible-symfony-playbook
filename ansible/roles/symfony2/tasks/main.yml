@@ -1,0 +1,29 @@
+---
+- include: http_user.yml
+
+# Deploy it in to a versioned directory
+- include: versioned_deployment.yml
+  when: symfony2_versioned_deployment
+
+# Default to putting the files in the root
+- set_fact: symfony2_release_destination="{{symfony2_project_root}}"
+  when: not symfony2_versioned_deployment
+
+- name: Reset owner to apache
+  sudo: yes
+  file: path={{symfony2_release_destination}} owner={{ansible_ssh_user}} group={{http_user}} recurse=yes
+  register: command_result
+  when: "'vagrant' not in group_names"
+
+- include: alternative-directories.yml
+
+# Setup permissions
+- include: permissions.yml
+  vars:
+    shared_directories:
+#      - "{{symfony2_release_destination}}/web/uploads/"
+      - "{{symfony2_release_destination}}/app/cache/"
+      - "{{symfony2_release_destination}}/app/logs/"
+
+# Perform Symfony specific actions
+- include: symfony.yml

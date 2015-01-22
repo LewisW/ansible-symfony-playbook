@@ -1,0 +1,5 @@
+---
+rds_database_size: 10
+rds_instance_type: db.m1.small
+mysql_root_username: root
+mysql_root_password: root

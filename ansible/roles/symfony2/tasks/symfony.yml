@@ -1,0 +1,45 @@
+---
+
+# Generic Symfony stuff
+- name: Check for an environment specific htaccess
+  stat: path={{ symfony2_release_destination }}/web/.htaccess.{{symfony2_project_env}}
+  register: htaccess_dist
+
+- stat: path={{ symfony2_release_destination }}/web/.htaccess
+  register: htaccess
+
+- name: Create htaccess symlink
+  file: state=link src={{ symfony2_release_destination }}/web/.htaccess.{{symfony2_project_env}} path={{ symfony2_release_destination }}/web/.htaccess
+  when: htaccess_dist.stat.exists and not htaccess.stat.exists
+
+- stat: path={{ symfony2_release_destination }}/app/config/parameters.yml
+  register: parameters_config
+
+- name: Compile app/config/parameters.yml from parameters.yml
+  template: src=parameters.yml.j2 dest={{ symfony2_release_destination }}/app/config/parameters.yml
+ # when: not parameters_config.stat.exists
+
+- debug: msg="{% for key, value in parameters.iteritems() %}{% if override_parameters[key] is defined %}{{ override_parameters[key]|to_yaml }}{% else %}"{{ value|to_yaml }}"{% endif %}{% endfor %}"
+
+- name: Run composer install
+  shell: cd {{ symfony2_release_destination }} && SYMFONY_ENV={{symfony2_project_env}} composer install {{symfony2_project_composer_opts}}
+
+- name: Dump assets
+  shell: cd {{ symfony2_release_destination }} && {{symfony2_php_path}} app/console assetic:dump --env={{symfony2_project_env}} {{symfony2_project_console_opts}}
+  ignore_errors: yes
+  register: result
+
+- name: Install mopa fonts
+  shell: cd {{ symfony2_release_destination }} && if [ $(grep -c 'mopa/bootstrap-bundle' composer.lock) -gt 0 ]; then {{symfony2_php_path}} app/console mopa:bootstrap:install:font --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  register: result
+
+- name: Put maintenance page live
+  file: state=link src={{symfony2_maintenance_root}} path={{symfony2_project_root}}/current
+  when: symfony2_versioned_deployment
+
+- name: Run migrations
+  shell: cd {{ symfony2_release_destination }} && if [ $(grep doctrine-migrations-bundle composer.lock) -gt 0 ]; then {{symfony2_php_path}} app/console doctrine:migrations:migrate -n --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+
+- name: Put version live
+  file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
+  when: symfony2_versioned_deployment

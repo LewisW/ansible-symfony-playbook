@@ -1,0 +1,4 @@
+---
+php_pecl_extensions:
+  - xdebug
+  - APCu
