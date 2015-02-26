@@ -5,5 +5,6 @@ symfony2_versioned_deployment: false
 # MySQL doesn't like us changing this once it's already built the log file
 mysql_innodb_log_file_size: 5242880
 
+
 apache_vhosts:
   - {servername: "project_name.dev", documentroot: "{{ symfony2_project_root }}/web", extra_parameters: "ServerAlias *.project_name.dev"}
