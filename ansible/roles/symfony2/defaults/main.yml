@@ -11,3 +11,7 @@ symfony2_versioned_deployment: true
 symfony2_project_console_opts: ~
 
 override_parameters: {}
+
+symfony2_project_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --optimize-autoloader -n'
+symfony2_project_source: '{{ playbook_dir }}/../'
+symfony2_maintenance_root: "{{symfony2_release_destination}}/maintenance"

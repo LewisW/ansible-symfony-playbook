@@ -1,1 +1,2 @@
 ntp_timezone: Europe/London
+php_date_timezone: "{{ntp_timezone}}"

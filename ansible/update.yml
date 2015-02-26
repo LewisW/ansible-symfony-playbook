@@ -5,7 +5,6 @@
 
   vars_files:
     - ../app/config/parameters.yml.dist
-    - vars/symfony2.yml
   roles:
     # Deploy our application
     - { role: symfony2 }

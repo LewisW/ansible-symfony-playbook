@@ -24,7 +24,6 @@
   gather_facts: yes
 
   vars_files:
-    - vars/symfony2.yml
     - vars/apache.yml
     - vars/packages.yml
     - vars/ntp.yml
