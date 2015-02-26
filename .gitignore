@@ -1,0 +1,6 @@
+#/ansible/.vagrant
+#/ansible/inventories/keys/*
+
+/group_vars/*
+/vars/*
+/inventories/*
