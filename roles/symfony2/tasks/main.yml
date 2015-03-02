@@ -9,6 +9,8 @@
 # Default to putting the files in the root
 - set_fact: symfony2_release_destination="{{symfony2_project_root}}"
   when: not symfony2_versioned_deployment
+  tags:
+    - always
 
 - name: Reset owner to apache
   sudo: yes

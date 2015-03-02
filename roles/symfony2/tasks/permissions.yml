@@ -23,3 +23,5 @@
   #when: "acl_check.rc == 1"
   with_items: shared_directories
   when: "'vagrant' not in group_names"
+  tags:
+    - shared_directories

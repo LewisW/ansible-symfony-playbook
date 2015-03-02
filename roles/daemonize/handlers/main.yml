@@ -3,3 +3,5 @@
   service: >
     name={{ daemonize_script_name }}
     state=started
+  tags:
+    - services

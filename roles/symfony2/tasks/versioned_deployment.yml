@@ -2,11 +2,17 @@
 - local_action: shell cd {{symfony2_project_source}} && git fetch -t && git describe --abbrev=0 --tags
   register: current_version_command
   ignore_errors: yes
+  tags:
+    - always
 
 - set_fact: symfony2_project_release="{{current_version_command.stdout}}"
   when: "current_version_command.rc == 0"
+  tags:
+    - always
 
 - set_fact: symfony2_release_destination="{{symfony2_project_root}}/releases/{{symfony2_project_release}}"
+  tags:
+    - always
 
 # Create the directories
 - name: Create the root directory.

@@ -17,6 +17,7 @@
   roles:
     # Install the basic server
     #- geerlingguy.firewall
+    - { role: system-packages }
     - { role: geerlingguy.ntp, sudo: yes }
 
 # Webservers
@@ -42,9 +43,6 @@
 
     # Install composer
     - { role: geerlingguy.composer, sudo: yes }
-  tasks:
-    - sudo: true
-      service: name=beanstalkd state=started
 
 # Vagrant
 - hosts: vagrant

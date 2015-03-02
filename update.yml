@@ -3,9 +3,16 @@
 - hosts: webserver
   gather_facts: yes
 
+  vars:
+    services:
+      - apache2
+      - mysql
+      #- beanstalkd
   vars_files:
     - ../app/config/parameters.yml.dist
   roles:
+    # Start any services prior
+    - { role: services, tags: ['services'] }
     # Deploy our application
     - { role: symfony2 }
 
