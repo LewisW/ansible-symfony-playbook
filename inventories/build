@@ -1,8 +1,0 @@
-[webserver]
-localhost ansible_connection=local
-
-[dbserver]
-localhost ansible_connection=local
-
-[build:children]
-webserver

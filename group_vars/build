@@ -1,7 +1,0 @@
-symfony2_project_env: dev
-symfony2_project_root: "{{ playbook_dir }}/../"
-symfony2_versioned_deployment: false
-mysql_root_password: root
-
-apache_vhosts:
-  - {servername: "project_name.dev", documentroot: "{{ symfony2_project_root }}/web", extra_parameters: "ServerAlias *.project_name.dev"}

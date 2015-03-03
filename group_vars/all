@@ -1,6 +1,0 @@
----
-override_parameters:
-  database_name:     project_name
-  database_user:     project_name
-  database_password: "{{ lookup('password', playbook_dir + '/keys/' + inventory_hostname + '/mysql_password length=20') }}"
-  secret:            "{{ lookup('password', playbook_dir + '/keys/' + inventory_hostname + '/secret length=30') }}"

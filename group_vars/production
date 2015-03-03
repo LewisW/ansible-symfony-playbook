@@ -1,4 +1,0 @@
-symfony2_project_root: /var/www/project_name
-
-apache_vhosts:
-  - {servername: "project_name.com", documentroot: "{{ symfony2_project_root }}/current/web", extra_parameters: "ServerAlias *.project_name.com"}

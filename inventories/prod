@@ -1,9 +1,0 @@
-[webserver]
-project_name.com	ansible_ssh_user=ubuntu
-
-[dbserver]
-project_name.com	ansible_ssh_user=ubuntu
-
-[production:children]
-webserver
-dbserver
