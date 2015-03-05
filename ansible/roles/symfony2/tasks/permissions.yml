@@ -20,7 +20,7 @@
     - shared_directories
 
 - name: Enable permission to app folders for apache
-  acl: name={{item}} entity={{http_user}} etype=user permissions=rwx default=yes state=present
+  acl: name={{item}} entity={{http_user}} etype=user permissions=rwx state=present
   sudo: yes
   when: "acl_check.rc == 0"
   with_items: shared_directories
@@ -28,6 +28,22 @@
     - shared_directories
 
 - name: Enable permission to app folders for ansible user
+  acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx state=present
+  sudo: yes
+  when: "acl_check.rc == 0"
+  with_items: shared_directories
+  tags:
+    - shared_directories
+
+- name: Enable default permission to app folders for apache
+  acl: name={{item}} entity={{http_user}} etype=user permissions=rwx default=yes state=present
+  sudo: yes
+  when: "acl_check.rc == 0"
+  with_items: shared_directories
+  tags:
+    - shared_directories
+
+- name: Enable default permission to app folders for ansible user
   acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx default=yes state=present
   sudo: yes
   when: "acl_check.rc == 0"
