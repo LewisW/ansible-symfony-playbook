@@ -1,0 +1,4 @@
+---
+- name: Start all services
+  service: name={{item}} state=started
+  with_items: services
