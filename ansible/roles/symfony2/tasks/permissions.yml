@@ -1,27 +1,36 @@
 ---
-#- name: Check for ACLs
-#  shell: hash getfacl
-#  ignore_errors: yes
-#  register: acl_check
-#
-#- name: Enable permission to app folders for apache
-#  #acl: name={{item}} entity={{http_user}} follow=yes etype=user permissions=rwX default=yes state=present
-#  sudo: yes
-#  command: chmod +a "{{http_user}} allow delete,write,append,file_inherit,directory_inherit"
-#  when: "acl_check.rc == 0"
-#  with_items: shared_directories
-#
-#- name: Enable permission to app folders for ansible user
-##  acl: name={{item}} entity={{ansible_ssh_user}} follow=yes etype=user permissions=rwX default=yes state=present
-#  sudo: yes
-#  command: chmod +a "{{ansible_ssh_user}} allow delete,write,append,file_inherit,directory_inherit"
-#  when: "acl_check.rc == 0"
-#  with_items: shared_directories
+- name: Check for ACLs
+  shell: hash getfacl
+  register: acl_check
+  tags:
+    - shared_directories
 
 - name: Enable permission to app folders
   file: path={{item}} mode=2775 recurse=yes state=directory owner={{ansible_ssh_user}} group={{http_user}}
-  #when: "acl_check.rc == 1"
+  when: "acl_check.rc == 1"
   with_items: shared_directories
-  when: "'vagrant' not in group_names"
+  tags:
+    - shared_directories
+
+- name: Make sure the app folders exist
+  file: path={{item}} state=directory
+  when: "acl_check.rc == 0"
+  with_items: shared_directories
+  tags:
+    - shared_directories
+
+- name: Enable permission to app folders for apache
+  acl: name={{item}} entity={{http_user}} etype=user permissions=rwx default=yes state=present
+  sudo: yes
+  when: "acl_check.rc == 0"
+  with_items: shared_directories
+  tags:
+    - shared_directories
+
+- name: Enable permission to app folders for ansible user
+  acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx default=yes state=present
+  sudo: yes
+  when: "acl_check.rc == 0"
+  with_items: shared_directories
   tags:
     - shared_directories

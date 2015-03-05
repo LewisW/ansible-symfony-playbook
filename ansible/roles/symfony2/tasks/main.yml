@@ -27,6 +27,7 @@
 #      - "{{symfony2_release_destination}}/web/uploads/"
       - "{{symfony2_release_destination}}/app/cache/"
       - "{{symfony2_release_destination}}/app/logs/"
+  when: skip_permissions is not defined
 
 # Perform Symfony specific actions
 - include: symfony.yml
