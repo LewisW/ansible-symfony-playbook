@@ -1,8 +1,0 @@
----
-- name: Check if ACLs are already setup in fstab
-  command: grep -E '/srv.*ext4.*defaults,acl' /etc/fstab
-  register: acl_installed
-
-- name: Install ACL
-  command:
-  when: not acl_installed
