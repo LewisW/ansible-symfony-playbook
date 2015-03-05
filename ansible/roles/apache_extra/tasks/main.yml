@@ -1,0 +1,20 @@
+---
+- name: Set a default ServerName (Debian)
+  lineinfile: dest="{{ apache_server_root }}/ports.conf" regexp="^ServerName" line="ServerName localhost"
+  when: ansible_os_family == 'Debian'
+  notify: restart apache
+
+- name: Set a default ServerName (Redhat)
+  lineinfile: dest="{{ apache_server_root }}/conf/{{ apache_daemon }}.conf" regexp="^ServerName" line="ServerName localhost"
+  when: ansible_os_family == 'RedHat'
+  notify: restart apache
+
+- name: Set the apache user (Debian)
+  lineinfile: dest="{{ apache_server_root }}/ports.conf" regexp="^User " line="User {{http_user}}"
+  when: force_http_user is defined and ansible_os_family == 'Debian'
+  notify: restart apache
+
+- name: Set the apache user (Redhat)
+  lineinfile: dest="{{ apache_server_root }}/conf/{{ apache_daemon }}.conf" regexp="^User " line="User {{http_user}}"
+  when: force_http_user is defined and ansible_os_family == 'RedHat'
+  notify: restart apache

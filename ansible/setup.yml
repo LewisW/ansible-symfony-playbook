@@ -33,6 +33,7 @@
     - { role: system-packages }
     - { role: bash }
     - { role: geerlingguy.apache, sudo: yes }
+    - { role: apache_extra, sudo: yes }
     - { role: geerlingguy.php, sudo: yes }
     - { role: php-twig, sudo: yes }
 #    - { role: php-extra }
