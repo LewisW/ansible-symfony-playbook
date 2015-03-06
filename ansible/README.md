@@ -7,7 +7,8 @@ git merge --squash ansible/master
 
 # Pulling updates & changes
 ```bash
-git pull -s subtree ansible master
+git fetch ansible
+git merge --squash ansible/master
 ```
 
 # Pushing back changes
