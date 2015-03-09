@@ -6,17 +6,10 @@
 - include: versioned_deployment.yml
   when: symfony2_versioned_deployment
 
-# Default to putting the files in the root
-- set_fact: symfony2_release_destination="{{symfony2_project_root}}"
-  when: not symfony2_versioned_deployment
-  tags:
-    - always
-
 - name: Reset owner to apache
   sudo: yes
   file: path={{symfony2_release_destination}} owner={{ansible_ssh_user}} group={{http_user}} recurse=yes
-  register: command_result
-  when: skip_permissions is not defined
+  when: not skip_permissions and not skip_chown
 
 - include: alternative-directories.yml
 
@@ -24,10 +17,10 @@
 - include: permissions.yml
   vars:
     shared_directories:
-#      - "{{symfony2_release_destination}}/web/uploads/"
+      - "{{symfony2_release_destination}}/web/uploads/"
       - "{{symfony2_release_destination}}/app/cache/"
       - "{{symfony2_release_destination}}/app/logs/"
-  when: skip_permissions is not defined
+  when: not skip_permissions
 
 # Perform Symfony specific actions
 - include: symfony.yml

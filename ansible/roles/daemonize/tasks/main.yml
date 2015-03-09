@@ -7,4 +7,18 @@
     owner=root
     group=root
     mode=0644
-  notify: 'restart upstart-{{ daemonize_script_name }}'
+
+- name: generate SysV scripts
+  sudo: true
+  template: >
+    src=sysv.j2
+    dest=/etc/init.d/{{ daemonize_script_name }}
+    owner=root
+    group=root
+    mode=0744
+
+- name: Force restart of the daemon
+  sudo: true
+  service: >
+    name={{ daemonize_script_name }}
+    state=restarted

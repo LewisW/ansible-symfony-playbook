@@ -12,4 +12,4 @@ setuid {{daemonize_uid}}
 setgid {{daemonize_gid}}
 
 # The command Upstart should execute to start our daemon
-exec php {{daemonize_command}}
+exec php {{daemonize_bin}} {{daemonize_command}} {{daemonize_opts}}

@@ -3,5 +3,8 @@ daemonize_respawn_limit: '5 10'
 daemonize_start_on: 'started mysql'
 daemonize_stop_on: 'runlevel S'
 
-daemonize_gid: 'www-data'
-daemonize_uid: 'www-data'
+daemonize_bin: '{{ symfony2_release_destination }}/app/console'
+daemonize_opts: ' -e {{symfony2_project_env}} -q'
+
+daemonize_gid: "{{http_user|default('www-data')}}"
+daemonize_uid: "{{ansible_ssh_user|default('www-data')}}"
