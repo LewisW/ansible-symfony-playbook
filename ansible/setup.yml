@@ -45,6 +45,12 @@
     # Install composer
     - { role: geerlingguy.composer, sudo: yes }
 
+- hosts: search
+  sudo: yes
+  roles:
+    - { role: geerlingguy.java }
+    - { role: geerlingguy.elasticsearch }
+
 # Vagrant
 - hosts: vagrant
   sudo: true
