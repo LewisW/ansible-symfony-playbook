@@ -8,5 +8,6 @@ geerlingguy.php,1.3.4
 geerlingguy.php-xdebug,1.1.2
 geerlingguy.java,1.1.0
 geerlingguy.elasticsearch,1.0.5
+franklinkim.php5-newrelic,1.0.0
 geerlingguy.repo-epel
 geerlingguy.repo-remi

@@ -45,6 +45,14 @@
     # Install composer
     - { role: geerlingguy.composer, sudo: yes }
 
+- hosts: production
+  sudo: yes
+  vars_prompt:
+      newrelic_license_key: "NewRelic license key"
+  roles:
+    # Install new relic
+    - { role: franklinkim.php5-newrelic }
+
 - hosts: search
   sudo: yes
   roles:
