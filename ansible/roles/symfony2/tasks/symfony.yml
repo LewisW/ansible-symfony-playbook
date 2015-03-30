@@ -19,6 +19,14 @@
   template: src=parameters.yml.j2 dest={{ symfony2_release_destination }}/app/config/parameters.yml
   when: not parameters_config.stat.exists
 
+- name: Retrieve Github OAUTH token from host
+  local_action: composer config github-oauth.github.com
+  register: oauth_token
+  ignore_errors: yes
+
+- name: Set the Github OAUTH token
+  shell: "composer config github-oauth.github.com {{oauth_token.stdout}}"
+
 - name: Run composer install
   shell: cd {{ symfony2_release_destination }} && SYMFONY_ENV={{symfony2_project_env}} composer install {{symfony2_project_composer_opts}}
 
