@@ -1,4 +1,10 @@
 ---
+- name: Add ppa Repository
+  sudo: yes
+  apt_repository: repo={{ item }}
+  with_items: system_repos
+  when: ansible_os_family == 'Debian'
+
 - name: Update apt for today
   sudo: yes
   apt: update_cache=yes cache_valid_time=86400
@@ -7,12 +13,6 @@
 - name: If NTP doesn't exist, force apt update
   sudo: yes
   shell: [[ `apt-cache policy ntp` = "" ]] && apt-get update
-  when: ansible_os_family == 'Debian'
-
-- name: Add ppa Repository
-  sudo: yes
-  apt_repository: repo={{ item }}
-  with_items: system_repos
   when: ansible_os_family == 'Debian'
 
 - apt: name={{ item }} state=latest
