@@ -47,8 +47,8 @@
 
 - hosts: production
   sudo: yes
-  vars_prompt:
-      newrelic_license_key: "NewRelic license key"
+  vars_files:
+    - vars/newrelic.yml
   roles:
     # Install new relic
     - { role: franklinkim.php5-newrelic }
