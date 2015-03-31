@@ -12,7 +12,7 @@
 
 - name: If NTP doesn't exist, force apt update
   sudo: yes
-  shell: [[ `apt-cache policy ntp` = "" ]] && apt-get update
+  shell: "apt-cache show ntp || apt-get update"
   when: ansible_os_family == 'Debian'
 
 - apt: name={{ item }} state=latest
