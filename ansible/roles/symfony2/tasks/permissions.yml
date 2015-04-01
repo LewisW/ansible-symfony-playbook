@@ -1,6 +1,7 @@
 ---
 - name: Check for ACLs
   shell: hash getfacl
+  ignore_errors: yes
   register: acl_check
   tags:
     - shared_directories
