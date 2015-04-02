@@ -1,4 +1,4 @@
-FROM lewisw/jenkins-slave
+FROM lewisw/docker-test-runner
 MAINTAINER Lewis Wright <lewis@allwrightythen.com>
 
 # Create the structure
@@ -13,7 +13,9 @@ RUN /ansible_dependencies
 COPY ansible ansible
 COPY app/config/parameters.yml.dist app/config/parameters.yml.dist
 RUN /ansible_setup && /graceful_shutdown
-#
+
+RUN /composer_oauth github-oauth.token
+
 # Copy any composer files and pre-download them
 COPY composer.* ./
 RUN /composer_setup
@@ -21,5 +23,3 @@ RUN /composer_setup
 # Try and provision, so we can atleast cache
 COPY ./ ./
 RUN /ansible_update && /graceful_shutdown
-
-ENTRYPOINT ["/sbin/my_init"]
