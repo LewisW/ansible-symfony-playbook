@@ -30,9 +30,9 @@
 - name: Create the release {{symfony2_project_release}} directory.
   file: state=directory path={{symfony2_release_destination}}
 
-- name: Reset any non-git files
-  local_action: shell cd {{symfony2_project_source}} && git reset --hard HEAD && git clean -e vendor -ffdx
-  when: symfony2_project_source is defined
+#- name: Reset any non-git files
+#  local_action: shell cd {{symfony2_project_source}} && git reset --hard HEAD && git clean -e vendor -ffdx
+#  when: symfony2_project_source is defined
 
 - name: Sync the source code to the destination
   synchronize: src={{symfony2_project_source}} dest={{symfony2_release_destination}} archive=yes owner=no

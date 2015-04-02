@@ -14,7 +14,8 @@ override_parameters: {}
 
 symfony2_project_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --optimize-autoloader -n'
 symfony2_project_source: '{{ playbook_dir }}/../'
-symfony2_maintenance_root: "{{ playbook_dir }}/maintenance"
+
+symfony2_maintenance_root: "{{symfony2_release_destination}}/ansible/maintenance"
 
 symfony2_release_destination: "{{symfony2_project_root}}"
 
