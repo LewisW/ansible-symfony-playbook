@@ -30,3 +30,13 @@ git checkout my_project -- ansible
 git commit -m "Merged in updates from project X"
 git push ansible/master
 ```
+
+# Provisioning
+```
+ansible-playbook ansible/setup.yml -i ansible/inventories/prod
+```
+
+# Deploying
+```
+ansible-playbook ansible/update.yml -i ansible/inventories/prod
+```
