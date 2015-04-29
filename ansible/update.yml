@@ -1,4 +1,14 @@
 ---
+# Database server
+- hosts: dbserver
+
+  vars:
+    services:
+      - mysql
+  roles:
+    # Start any services prior
+    - { role: services, tags: ['services'] }
+
 # Webservers
 - hosts: webserver
   gather_facts: yes
@@ -6,7 +16,6 @@
   vars:
     services:
       - apache2
-      - mysql
       #- beanstalkd
   vars_files:
     - ../app/config/parameters.yml.dist
