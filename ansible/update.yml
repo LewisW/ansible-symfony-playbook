@@ -1,7 +1,6 @@
 ---
 # Database server
 - hosts: dbserver
-
   vars:
     services:
       - mysql
@@ -9,10 +8,18 @@
     # Start any services prior
     - { role: services, tags: ['services'] }
 
+# Search server
+- hosts: search
+  vars:
+    services:
+      - elasticsearch
+  roles:
+    # Start any services prior
+    - { role: services, tags: ['services'] }
+
 # Webservers
 - hosts: webserver
   gather_facts: yes
-
   vars:
     services:
       - apache2
