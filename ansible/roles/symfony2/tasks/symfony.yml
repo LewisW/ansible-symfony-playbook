@@ -12,7 +12,7 @@
   file: state=link src={{ symfony2_release_destination }}/web/.htaccess.{{symfony2_project_env}} path={{ symfony2_release_destination }}/web/.htaccess
   when: htaccess_dist.stat.exists and not htaccess.stat.exists
 
-- stat: path={{ symfony2_release_destination }}/app/config/parameters.yml
+- stat: path={{ symfony2_release_destination }}/app/config/parameters.yml follow=yes
   register: parameters_config
 
 - name: Compile app/config/parameters.yml from parameters.yml
