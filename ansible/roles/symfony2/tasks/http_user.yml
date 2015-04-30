@@ -12,4 +12,4 @@
 - name: Add user to www-data group
   sudo: yes
   user: name="{{ ansible_ssh_user }}" groups="www-data" append="yes"
-  when: skip_permissions is not defined
+  when: not skip_permissions
