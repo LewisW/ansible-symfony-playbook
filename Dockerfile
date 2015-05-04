@@ -5,7 +5,7 @@ MAINTAINER Lewis Wright <lewis@allwrightythen.com>
 WORKDIR /project
 
 # Use Leeroy as an apt-cache
-RUN echo 'Acquire::http { Proxy "http://leeroy.vivait.co.uk:3142"; };'; >> /etc/apt/apt.conf.d/00proxy \
+RUN echo 'Acquire::http { Proxy "http://leeroy.vivait.co.uk:3142"; };' >> /etc/apt/apt.conf.d/00proxy \
     && apt-get update
 
 COPY github-oauth.token github-oauth.token
