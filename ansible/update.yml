@@ -24,6 +24,7 @@
       #- beanstalkd
   vars_files:
     - ../app/config/parameters.yml.dist
+    - vars/mysql.yml
   roles:
     # Start any services prior
     - { role: services, tags: ['services'] }
