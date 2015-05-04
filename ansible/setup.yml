@@ -45,6 +45,9 @@
     # Install composer
     - { role: geerlingguy.composer, sudo: yes }
 
+    # Install blackfire
+    - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
+
 - hosts: production
   sudo: yes
   vars_files:
