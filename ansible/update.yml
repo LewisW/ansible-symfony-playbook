@@ -10,13 +10,11 @@
 
 # Search server
 - hosts: search
-  vars:
-    services:
-      - elasticsearch
-  roles:
-    # Start any services prior
-    - { role: services, tags: ['services'] }
-
+  tasks:
+    - shell: service elasticsearch start
+      sudo: yes
+      tags: ['services'] 
+    
 # Webservers
 - hosts: webserver
   gather_facts: yes
