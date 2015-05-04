@@ -1,6 +1,7 @@
 ---
 - local_action: shell cd {{symfony2_project_source}} && git fetch -t && git describe --abbrev=0 --tags
   register: current_version_command
+  sudo: yes
   ignore_errors: yes
   tags:
     - always
@@ -16,6 +17,7 @@
 
 # Create the directories
 - name: Create the root directory.
+  sudo: yes
   file: state=directory owner={{ansible_ssh_user}} group={{http_user}} path={{symfony2_project_root}}
 
 - name: Create the shared directory.

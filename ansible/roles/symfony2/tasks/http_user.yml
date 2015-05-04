@@ -1,6 +1,7 @@
 ---
 # Work out the HTTP user
-- shell: ps axo user:50,pid,cmd | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d" " -f1
+- name: Discover HTTP user
+  shell: "ps axo user:50,pid,cmd | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d' ' -f1"
   register: http_user_command
   tags:
     - always

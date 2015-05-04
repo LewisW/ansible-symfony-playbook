@@ -11,7 +11,8 @@ if ! hash ansible-playbook 2>/dev/null; then
     #    sudo apt-get install -y ansible
 	#else
 		sudo easy_install pip
-		sudo -H pip install ansible markupsafe --quiet
+		sudo -H pip install ansible markupsafe --allow-external mysql-connector-python mysql-connector-python --quiet
+		sudo -H pip install mysql-python boto
 	#fi
 fi
 
