@@ -3,9 +3,9 @@ source ~/.git-prompt.sh
 GIT_PS1_SHOWCOLORHINTS=1
 PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
 
-alias sdev="php app/console --env=dev"
-alias sprod="php app/console --env=prod"
-alias stest="php app/console --env=test"
+alias sdev="php {{symfony2_console_path|default('app/console')}} --env=dev"
+alias sprod="php {{symfony2_console_path|default('app/console')}} --env=prod"
+alias stest="php {{symfony2_console_path|default('app/console')}} --env=test"
 
 alias rm="rm -i"
 alias h="history|grep "

@@ -8,14 +8,14 @@ NAME="{{daemonize_script_name}}"
 DESC="Daemon for {{daemonize_script_name}}"
 PIDFILE="/var/run/${NAME}.pid"
 LOGFILE="/var/log/${NAME}.log"
- 
+
 DAEMON="{{daemonize_bin}}"
-DAEMON_OPTS="{{daemonize_command}} {{daemonize_opts}}"
- 
+DAEMON_OPTS="{{daemonize_bin_opts}} {{daemonize_command}} {{daemonize_opts}}"
+
 START_OPTS="--start --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} -- ${DAEMON_OPTS}"
 STOP_OPTS="--stop --pidfile ${PIDFILE}"
  
-test -x $DAEMON || exit 0
+test -x "$DAEMON" || exit 0
  
 set -e
  

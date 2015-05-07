@@ -4,6 +4,7 @@
 symfony2_project_release: dev-master
 symfony2_project_branch: master
 symfony2_php_path: php
+symfony2_console_path: "{{ symfony2_release_destination }}/app/console"
 
 symfony2_project_env: prod
 

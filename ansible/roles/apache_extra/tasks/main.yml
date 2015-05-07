@@ -1,20 +1,31 @@
 ---
-- name: Set a default ServerName (Debian)
-  lineinfile: dest="{{ apache_server_root }}/ports.conf" regexp="^ServerName" line="ServerName localhost"
+- name: Set the apache defaults (Debian)
+  template: src="apache_defaults.conf.j2" dest="{{ apache_server_root }}/conf-enabled/defaults.conf"
   when: ansible_os_family == 'Debian'
   notify: restart apache
 
-- name: Set a default ServerName (Redhat)
-  lineinfile: dest="{{ apache_server_root }}/conf/{{ apache_daemon }}.conf" regexp="^ServerName" line="ServerName localhost"
+- name: Set the apache defaults (Redhat)
+  template: src="apache_defaults.conf.j2" dest="{{ apache_server_root }}/conf.d/defaults.conf"
   when: ansible_os_family == 'RedHat'
   notify: restart apache
 
-- name: Set the apache user (Debian)
-  lineinfile: dest="{{ apache_server_root }}/ports.conf" regexp="^User " line="User {{http_user}}"
-  when: force_http_user is defined and ansible_os_family == 'Debian'
+- name: Enable proxy_fcgi (Debian)
+  command: a2enmod -m proxy_fcgi
+  sudo: yes
+  when: ansible_os_family == 'Debian' and php_enable_php_fpm
   notify: restart apache
 
-- name: Set the apache user (Redhat)
-  lineinfile: dest="{{ apache_server_root }}/conf/{{ apache_daemon }}.conf" regexp="^User " line="User {{http_user}}"
-  when: force_http_user is defined and ansible_os_family == 'RedHat'
+- name: Set apache to proxy PHP to FPM (RedHat)
+  lineinfile: state="present" dest="{{ apache_server_root }}/conf/{{ apache_daemon }}.conf" regexp="LoadModule proxy_fcgi_module modules\/mod_proxy_fcgi\.so" line="LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so"
+  when: ansible_os_family == 'RedHat' and php_enable_php_fpm
+  notify: restart apache
+
+- name: Set apache to proxy PHP to FPM (Debian)
+  template: src="php5_fpm.conf.j2" dest="{{ apache_server_root }}/conf-enabled/fpm.conf"
+  when: ansible_os_family == 'Debian' and php_enable_php_fpm
+  notify: restart apache
+
+- name: Set apache to proxy PHP to FPM (Redhat)
+  template: src="php5_fpm.conf.j2" dest="{{ apache_server_root }}/conf.d/fpm.conf"
+  when: ansible_os_family == 'RedHat' and php_enable_php_fpm
   notify: restart apache

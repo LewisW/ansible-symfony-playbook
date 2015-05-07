@@ -20,4 +20,5 @@ php_packages:
   - php5-dev
   # Needed for MySQL backup:
   - python-mysqldb
+  - php5-fpm
 php_enable_php_fpm: true
