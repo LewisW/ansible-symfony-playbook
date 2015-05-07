@@ -6,11 +6,16 @@
   tags:
     - always
 
+- name: Add user to www-data group
+  sudo: yes
+  user: name="{{ ansible_ssh_user }}" groups="{{http_user_command.stdout}}" append="yes"
+  when: not skip_permissions
+  register: add_group
+
+- name: Reload the user's group
+  shell: "newgrp {{http_user_command.stdout}}"
+  when: add_group.changed
+
 - set_fact: http_user="{{http_user_command.stdout}}"
   tags:
     - always
-
-- name: Add user to www-data group
-  sudo: yes
-  user: name="{{ ansible_ssh_user }}" groups="www-data" append="yes"
-  when: not skip_permissions
