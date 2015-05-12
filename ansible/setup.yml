@@ -13,6 +13,7 @@
   gather_facts: yes
 
   vars_files:
+    - ../app/config/parameters.yml.dist
     - vars/ntp.yml
   roles:
     # Install the basic server
@@ -25,6 +26,7 @@
   gather_facts: yes
 
   vars_files:
+    - ../app/config/parameters.yml.dist
     - vars/apache.yml
     - vars/packages.yml
     - vars/ntp.yml
@@ -35,8 +37,8 @@
     - { role: geerlingguy.apache, sudo: yes }
     - { role: apache_extra, sudo: yes }
     - { role: geerlingguy.php, sudo: yes }
+    - { role: php-extra, sudo: yes }
     - { role: php-twig, sudo: yes }
-#    - { role: php-extra }
 
     # Install GIT and add our server to known hosts
     - { role: geerlingguy.git, sudo: yes }
@@ -48,13 +50,14 @@
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
 
-- hosts: production
+- hosts: production:staging
   sudo: yes
   vars_files:
+    - ../app/config/parameters.yml.dist
     - vars/newrelic.yml
   roles:
     # Install new relic
-    - { role: franklinkim.php5-newrelic }
+    - { role: franklinkim.php5-newrelic, when: newrelic_license_key is defined }
 
 - hosts: search
   sudo: yes
@@ -66,6 +69,7 @@
 - hosts: vagrant
   sudo: true
   vars_files:
+    - ../app/config/parameters.yml.dist
     - vars/xdebug.yml
   roles:
     - { role: geerlingguy.php }

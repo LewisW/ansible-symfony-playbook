@@ -1,4 +1,4 @@
-ServerName {{ apache_vhosts[0].servername|default('localhost') }}
+ServerName localhost
 {% if force_http_user is defined and http_user is defined %}
 User {{http_user}}
 {% endif %}

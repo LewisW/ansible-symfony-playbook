@@ -1,7 +1,4 @@
 ---
-dependencies:
-  - { role: geerlingguy.php }
-
 galaxy_info:
   author: geerlingguy
   description: PHP Twig for Linux

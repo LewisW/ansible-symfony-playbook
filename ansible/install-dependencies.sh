@@ -16,4 +16,4 @@ if ! hash ansible-playbook 2>/dev/null; then
 	#fi
 fi
 
-sudo ansible-galaxy install -r requirements.txt -p ./roles/ --ignore-errors
+sudo ansible-galaxy install -r requirements.txt --ignore-errors --force -p ./roles/

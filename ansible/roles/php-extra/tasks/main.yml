@@ -1,0 +1,29 @@
+---
+- name: Put PHP configuration file in place
+  template:
+    src: php.ini.j2
+    dest: "{{ php_conf_path }}/php.ini"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart php-fpm
+    - restart webserver
+
+- name: Put PHP CLI configuration file in place
+  template:
+    src: php-cli.ini.j2
+    dest: "/etc/php5/cli/php.ini"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart php-fpm
+    - restart webserver
+
+- name: Use memcached for PHP sessions
+  template: src="memcached.ini.j2" dest="{{ php_extension_conf_path }}/memcached.ini"
+  when: "override_parameters.session_memcached_host|default('') or parameters.session_memcached_host|default('')"
+  notify:
+    - restart php-fpm
+    - restart webserver

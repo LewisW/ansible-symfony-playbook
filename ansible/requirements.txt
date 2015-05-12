@@ -2,10 +2,10 @@ geerlingguy.apache,1.3.1
 geerlingguy.composer,1.0.3
 geerlingguy.firewall,1.0.5
 geerlingguy.git,1.0.4
-geerlingguy.mysql,1.4.2
+geerlingguy.mysql,1.5.0
 geerlingguy.ntp,1.0.2
-geerlingguy.php,1.3.4
-geerlingguy.php-xdebug,1.1.2
+geerlingguy.php,1.5.0
+geerlingguy.php-xdebug,1.1.3
 geerlingguy.java,1.1.0
 geerlingguy.elasticsearch,1.0.5
 franklinkim.php5-newrelic,1.0.0
