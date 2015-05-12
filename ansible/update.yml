@@ -18,8 +18,10 @@
 # Webservers
 - hosts: webserver
   gather_facts: yes
+  max_fail_percentage: 0
   vars:
     services:
+      - php5-fpm
       - apache2
       #- beanstalkd
   vars_files:
