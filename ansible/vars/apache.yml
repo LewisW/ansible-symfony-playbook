@@ -2,7 +2,7 @@
 apache_packages: [apache2, apache2-mpm-prefork, apache2-utils]
 php_enable_apc: false
 
-php_conf_path: "{{ '/etc/php5/fpm' if php_enable_php_fpm else '/etc/php5/apache2' }}"
+php_conf_path: "{{ '/etc/php5/fpm' if 'php5-fpm' in php_packages else '/etc/php5/apache2' }}"
 php_extension_conf_path: "{{ php_conf_path }}/conf.d"
 php_use_managed_ini: false
 
