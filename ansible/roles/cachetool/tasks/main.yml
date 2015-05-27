@@ -1,0 +1,10 @@
+---
+- name: Download cachetool
+  get_url: url=http://gordalina.github.io/cachetool/downloads/cachetool.phar dest="{{cachetool_path}}" mode=+x
+
+- name: Update cachetool to latest version (if configured).
+  shell: >
+    php {{ cachetool_path }} self-update
+  register: cachetool_update
+  changed_when: "'Updating to version' in cachetool_update.stdout"
+  when: cachetool_keep_updated

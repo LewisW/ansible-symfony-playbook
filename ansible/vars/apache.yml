@@ -6,8 +6,9 @@ php_conf_path: "{{ '/etc/php5/fpm' if 'php5-fpm' in php_packages else '/etc/php5
 php_extension_conf_path: "{{ php_conf_path }}/conf.d"
 php_use_managed_ini: false
 
+php_opcache_enabled_in_ini: true
+
 php_max_execution_time: 1200
 php_cli_max_execution_time: -1
 php_memory_limit: 1G
 php_cli_memory_limit: -1
-  

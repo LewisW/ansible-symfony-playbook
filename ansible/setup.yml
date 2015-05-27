@@ -47,17 +47,26 @@
     # Install composer
     - { role: geerlingguy.composer, sudo: yes }
 
+    # Install cachetool
+    - { role: cachetool, sudo: yes, when: php_opcache_enabled_in_ini }
+
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
 
-- hosts: production:staging
+- hosts: search
   sudo: yes
-  vars_files:
-    - ../app/config/parameters.yml.dist
-    - vars/newrelic.yml
   roles:
-    # Install new relic
-    - { role: franklinkim.php5-newrelic, when: newrelic_license_key is defined }
+    - { role: geerlingguy.java }
+    - { role: geerlingguy.elasticsearch }
+
+#- hosts: production:staging
+#  sudo: yes
+#  vars_files:
+#    - ../app/config/parameters.yml.dist
+#    - vars/newrelic.yml
+#  roles:
+#    # Install new relic
+#    - { role: franklinkim.php5-newrelic, when: newrelic_license_key is defined }
 
 - hosts: search
   sudo: yes
