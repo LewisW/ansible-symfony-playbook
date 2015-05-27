@@ -12,20 +12,20 @@
 - name: Enable proxy_fcgi (Debian)
   command: a2enmod -m proxy_fcgi
   sudo: yes
-  when: ansible_os_family == 'Debian' and php_enable_php_fpm
+  when: ansible_os_family == 'Debian' and 'php5-fpm' in php_packages
   notify: restart apache
 
 - name: Set apache to proxy PHP to FPM (RedHat)
   lineinfile: state="present" dest="{{ apache_server_root }}/conf/{{ apache_daemon }}.conf" regexp="LoadModule proxy_fcgi_module modules\/mod_proxy_fcgi\.so" line="LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so"
-  when: ansible_os_family == 'RedHat' and php_enable_php_fpm
+  when: ansible_os_family == 'RedHat' and 'php5-fpm' in php_packages
   notify: restart apache
 
 - name: Set apache to proxy PHP to FPM (Debian)
   template: src="php5_fpm.conf.j2" dest="{{ apache_server_root }}/conf-enabled/fpm.conf"
-  when: ansible_os_family == 'Debian' and php_enable_php_fpm
+  when: ansible_os_family == 'Debian' and 'php5-fpm' in php_packages
   notify: restart apache
 
 - name: Set apache to proxy PHP to FPM (Redhat)
   template: src="php5_fpm.conf.j2" dest="{{ apache_server_root }}/conf.d/fpm.conf"
-  when: ansible_os_family == 'RedHat' and php_enable_php_fpm
+  when: ansible_os_family == 'RedHat' and 'php5-fpm' in php_packages
   notify: restart apache
