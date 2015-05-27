@@ -9,4 +9,5 @@ php_use_managed_ini: false
 php_max_execution_time: 1200
 php_cli_max_execution_time: -1
 php_memory_limit: 1G
+php_cli_memory_limit: -1
   
