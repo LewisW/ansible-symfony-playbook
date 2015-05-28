@@ -21,15 +21,19 @@
   max_fail_percentage: 0
   vars:
     services:
-      - php5-fpm
       - apache2
-      #- beanstalkd
   vars_files:
     - ../app/config/parameters.yml.dist
     - vars/mysql.yml
+    - vars/apache.yml
   roles:
-    # Start any services prior
+    # Start FPM prior
+    - { role: services, tags: ['services'], services: ['php5-fpm'], when: 'php5-fpm' in php_packages }
+    # Start Beanstalk prior
+    - { role: services, tags: ['services'], services: ['beanstalkd'], when: 'beanstalkd' in system_packages }
+    # Start any other services prior
     - { role: services, tags: ['services'] }
+    
     # Deploy our application
     - { role: symfony2 }
 
