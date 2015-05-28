@@ -16,6 +16,7 @@ git merge --squash ansible/master
 If the change you want to pash back upstream is in a commit that is separate to any changes that you don't want to push (i.e. doesn't contain any project related commmits), simple switch to the ansible branch and cherry pick the changes from your git log:
 ```bash
 git checkout ansible
+git pull
 git cherry-pick <commit>
 git push ansible/master
 ```
@@ -25,6 +26,7 @@ Otherwise if you've mixed project related commits with ansible commits that you 
 
 ```bash
 git checkout ansible
+git pull
 git checkout my_project -- ansible
 # Filter any project related changes from the files
 git commit -m "Merged in updates from project X"

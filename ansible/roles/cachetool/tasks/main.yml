@@ -1,6 +1,6 @@
 ---
 - name: Download cachetool
-  get_url: url=http://gordalina.github.io/cachetool/downloads/cachetool.phar dest="{{cachetool_path}}" mode=+x
+  get_url: url=http://gordalina.github.io/cachetool/downloads/cachetool.phar dest="{{cachetool_path}}" mode="u=rwx,g=rx,o=rx"
 
 - name: Update cachetool to latest version (if configured).
   shell: >

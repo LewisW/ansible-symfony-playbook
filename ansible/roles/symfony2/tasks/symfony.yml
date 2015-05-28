@@ -51,12 +51,12 @@
   shell: cd {{ symfony2_release_destination }} && if [ $(grep doctrine-migrations-bundle composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:migrations:migrate -n --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
 
 - name: Clear the opcache for CGI
-  command: "{{cachetool_path}} opcache:reset --fcgi"
-  when: php_opcache_enabled_in_ini
+  command: "cachetool opcache:reset --fcgi"
+  when: php_opcache_enabled_in_ini is defined and php_opcache_enabled_in_ini and 'php5-fpm' in php_packages
 
 - name: Clear the opcache for CLI
-  command: "{{cachetool_path}} opcache:reset --cli"
-  when: php_opcache_enabled_in_ini
+  command: "cachetool opcache:reset --cli"
+  when: php_opcache_enabled_in_ini is defined and php_opcache_enabled_in_ini
 
 - name: Put version live
   file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
