@@ -12,8 +12,12 @@
   when: not skip_permissions
   register: add_group
 
-- name: Reload the user's group
-  shell: "newgrp {{http_user_command.stdout}}"
+- name: Reload the user's group by killing shell
+#  delegate_to: localhost
+#  shell: ssh {{ inventory_hostname }} "sudo ps -ef | grep sshd | grep `whoami` | awk '{print \"sudo kill -9\", \$2}' | sh"
+  sudo: yes
+  shell: "ps -ef | grep sshd | grep `whoami` | awk '{print \"kill -9\", $2}' | sh"
+  failed_when: false
   when: add_group.changed
 
 - set_fact: http_user="{{http_user_command.stdout}}"

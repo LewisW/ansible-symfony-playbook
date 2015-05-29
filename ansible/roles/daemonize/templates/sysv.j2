@@ -22,6 +22,12 @@ set -e
 case "$1" in
     start)
         echo -n "Starting ${DESC}: "
+
+        if [ -e $PIDFILE ]; then
+                echo "Already running."
+                exit 0
+        fi
+
         start-stop-daemon $START_OPTS >> $LOGFILE
         echo "$NAME."
         ;;

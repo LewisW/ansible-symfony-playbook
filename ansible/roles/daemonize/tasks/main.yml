@@ -22,3 +22,4 @@
   service: >
     name={{ daemonize_script_name }}
     state=restarted
+  when: daemonize_start_on|bool
