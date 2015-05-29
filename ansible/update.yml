@@ -25,12 +25,12 @@
   vars_files:
     - ../app/config/parameters.yml.dist
     - vars/mysql.yml
-    - vars/apache.yml
+    - vars/packages.yml
   roles:
     # Start FPM prior
-    - { role: services, tags: ['services'], services: ['php5-fpm'], when: 'php5-fpm' in php_packages }
+    - { role: services, tags: ['services'], services: ['php5-fpm'], when: "'php5-fpm' in php_packages" }
     # Start Beanstalk prior
-    - { role: services, tags: ['services'], services: ['beanstalkd'], when: 'beanstalkd' in system_packages }
+    - { role: services, tags: ['services'], services: ['beanstalkd'], when: "'beanstalkd' in system_packages" }
     # Start any other services prior
     - { role: services, tags: ['services'] }
     
