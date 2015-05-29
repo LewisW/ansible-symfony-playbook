@@ -19,6 +19,7 @@ symfony2_project_source: '{{ playbook_dir }}/../'
 symfony2_maintenance_root: "{{symfony2_release_destination}}/ansible/maintenance"
 
 symfony2_release_destination: "{{symfony2_project_root}}"
+symfony2_final_destination: "{{ symfony2_project_root }}{{ '/current' if symfony2_versioned_deployment else '' }}"
 
 # Disables all permission operations
 skip_permissions: false
