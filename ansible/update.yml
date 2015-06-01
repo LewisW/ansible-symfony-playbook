@@ -14,6 +14,9 @@
     - shell: service elasticsearch start
       sudo: yes
       tags: ['services'] 
+    - name: Wait for elastic search to boot
+      wait_for: port=9200 timeout=60
+      tags: ['services']
     
 # Webservers
 - hosts: webserver
@@ -25,7 +28,9 @@
   vars_files:
     - ../app/config/parameters.yml.dist
     - vars/mysql.yml
+    - vars/symfony.yml
     - vars/packages.yml
+    - vars/apache.yml
   roles:
     # Start FPM prior
     - { role: services, tags: ['services'], services: ['php5-fpm'], when: "'php5-fpm' in php_packages" }
