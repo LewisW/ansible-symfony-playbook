@@ -8,6 +8,7 @@ geerlingguy.php,1.5.0
 geerlingguy.php-xdebug,1.1.3
 geerlingguy.java,1.1.0
 geerlingguy.elasticsearch,1.0.5
+sivel.newrelic,
 franklinkim.php5-newrelic,1.0.0
 AbdoulNdiaye.Blackfire,v1.0.2
 geerlingguy.repo-epel
