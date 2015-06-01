@@ -47,8 +47,8 @@
 - name: Create symlink for app/config/parameters.yml from shared directory
   file: state=link src={{symfony2_project_root}}/shared/app/config/parameters.yml dest={{symfony2_release_destination}}/app/config/parameters.yml force=yes
 
-- name: Create symlink for app/config/tenants from shared directory
-  file: state=link src={{symfony2_project_root}}/shared/app/config/tenants dest={{symfony2_release_destination}}/app/config/tenants force=yes
+- name: Copy tenants from old host
+  command: "cp {{symfony2_project_root}}/current/app/config/config_tenant* {{symfony2_release_destination}}/app/config/"
 
 - name: Create web/uploads symlink
   file: state=link src={{symfony2_project_root}}/shared/web/uploads path={{symfony2_release_destination}}/web/uploads force=yes

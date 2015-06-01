@@ -30,6 +30,9 @@ skip_chown: false
 # Disables backups
 skip_backup: false
 
+# Run migrations for versioned deployments by default
+symfony2_run_migrations: "{{symfony2_versioned_deployment}}"
+
 backup_rds_instances: []
 
 backup_mysql_databases: []

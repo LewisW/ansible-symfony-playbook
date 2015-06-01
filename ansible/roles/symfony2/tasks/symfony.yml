@@ -23,22 +23,22 @@
   shell: cd {{ symfony2_release_destination }} && SYMFONY_ENV={{symfony2_project_env}} composer install {{symfony2_project_composer_opts}}
 
 - name: Dump assets
-  shell: cd {{ symfony2_release_destination }} && if [ $(grep -c 'symfony/assetic-bundle' composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} assetic:dump --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  shell: cd {{ symfony2_release_destination }} && if grep -q 'symfony/assetic-bundle' composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} assetic:dump -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
   ignore_errors: yes
   register: result
 
 - name: Install mopa fonts
-  shell: cd {{ symfony2_release_destination }} && if [ $(grep -c 'mopa/bootstrap-bundle' composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} mopa:bootstrap:install:font --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  shell: cd {{ symfony2_release_destination }} && if grep -q 'mopa/bootstrap-bundle' composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} mopa:bootstrap:install:font -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
   register: result
 
 - name: Clear Doctrine metadata cache
-  shell: cd {{ symfony2_release_destination }} && if [ $(grep doctrine/doctrine-bundle composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-metadata --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  shell: cd {{ symfony2_release_destination }} && if grep -q doctrine/doctrine-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-metadata -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
 
 - name: Clear Doctrine result cache
-  shell: cd {{ symfony2_release_destination }} && if [ $(grep doctrine/doctrine-bundle composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-result --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  shell: cd {{ symfony2_release_destination }} && if grep -q doctrine/doctrine-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-result -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
 
 - name: Clear Doctrine query cache
-  shell: cd {{ symfony2_release_destination }} && if [ $(grep doctrine/doctrine-bundle composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-query --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  shell: cd {{ symfony2_release_destination }} && if grep -q doctrine/doctrine-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-query -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
 
 - include: backup.yml
   when: not skip_backup
@@ -48,7 +48,8 @@
   when: symfony2_versioned_deployment
 
 - name: Run migrations
-  shell: cd {{ symfony2_release_destination }} && if [ $(grep doctrine-migrations-bundle composer.lock) -gt 0 ]; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:migrations:migrate -n --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  shell: cd {{ symfony2_release_destination }} && if grep -q doctrine-migrations-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:migrations:migrate -n --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  when: symfony2_run_migrations
 
 - name: Clear the opcache for CGI
   command: "cachetool opcache:reset --fcgi"
@@ -56,7 +57,7 @@
 
 - name: Clear the opcache for CLI
   command: "cachetool opcache:reset --cli"
-  when: php_opcache_enabled_in_ini is defined and php_opcache_enabled_in_ini
+  when: php_opcache_enabled_in_ini is defined and php_opcache_enable_cli
 
 - name: Put version live
   file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
