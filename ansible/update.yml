@@ -28,7 +28,6 @@
   vars_files:
     - ../app/config/parameters.yml.dist
     - vars/mysql.yml
-    - vars/symfony.yml
     - vars/packages.yml
     - vars/apache.yml
   roles:
