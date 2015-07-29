@@ -9,6 +9,7 @@
     aws_secret_key="{{ item.aws_secret_key }}"
     region="{{ item.region }}"
   with_items: backup_rds_instances
+  run_once: true
 
 - command: python -c "import MySQLdb"
   register: python_mysql
@@ -24,4 +25,5 @@
     login_password="{{ item.password }}"
   when: python_mysql.rc == 0
   with_items: backup_mysql_databases
+  run_once: true
 
