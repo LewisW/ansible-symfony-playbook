@@ -22,6 +22,9 @@
 - name: Run composer install
   shell: cd {{ symfony2_release_destination }} && SYMFONY_ENV={{symfony2_project_env}} composer install {{symfony2_project_composer_opts}}
 
+- name: Update the assets version
+  shell: cd {{ symfony2_release_destination }} && if grep -q 'kachkaev/assets-version-bundle' composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} assets_version:set {{ ansible_date_time.epoch }} --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+
 - name: Dump assets
   shell: cd {{ symfony2_release_destination }} && if grep -q 'symfony/assetic-bundle' composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} assetic:dump -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
   ignore_errors: yes
@@ -51,14 +54,16 @@
   shell: cd {{ symfony2_release_destination }} && if grep -q doctrine-migrations-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:migrations:migrate -n --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
   when: symfony2_run_migrations
 
+- name: Put version live
+  file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
+  when: symfony2_versioned_deployment
+
 - name: Clear the opcache for CGI
+  sudo: yes
   command: "cachetool opcache:reset --fcgi"
   when: php_opcache_enabled_in_ini is defined and php_opcache_enabled_in_ini and 'php5-fpm' in php_packages
 
 - name: Clear the opcache for CLI
+  sudo: yes
   command: "cachetool opcache:reset --cli"
   when: php_opcache_enabled_in_ini is defined and php_opcache_enable_cli
-
-- name: Put version live
-  file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
-  when: symfony2_versioned_deployment
