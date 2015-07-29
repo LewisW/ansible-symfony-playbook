@@ -15,11 +15,6 @@
 
 # Setup permissions
 - include: permissions.yml
-  vars:
-    shared_directories:
-      - "{{symfony2_release_destination}}/web/uploads/"
-      - "{{symfony2_release_destination}}/app/cache/"
-      - "{{symfony2_release_destination}}/app/logs/"
   when: not skip_permissions
 
 # Perform Symfony specific actions

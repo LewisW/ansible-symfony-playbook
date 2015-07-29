@@ -23,12 +23,6 @@
 - name: Create the shared directory.
   file: state=directory owner={{ansible_ssh_user}} group={{http_user}} path={{symfony2_project_root}}/shared
 
-- name: Create the shared/app/config directory.
-  file: state=directory path={{symfony2_project_root}}/shared/app/config
-
-- name: Create the shared/web/uploads directory.
-  file: state=directory path={{symfony2_project_root}}/shared/web/uploads
-
 - name: Create the release {{symfony2_project_release}} directory.
   file: state=directory path={{symfony2_release_destination}}
 
@@ -44,11 +38,10 @@
   git: repo={{symfony2_project_repo}} dest={{symfony2_release_destination}} version={{symfony2_project_branch}} key_file=/root/.ssh/deployment_id_rsa accept_hostkey=yes
   when: symfony2_project_repo is defined and ssh_deployment_key is defined
 
-- name: Create symlink for app/config/parameters.yml from shared directory
-  file: state=link src={{symfony2_project_root}}/shared/app/config/parameters.yml dest={{symfony2_release_destination}}/app/config/parameters.yml force=yes
-
+- name: "Create shared/{{item}} symlink"
+  file: state=link src="{{symfony2_project_root}}/shared/{{item}}" path="{{symfony2_release_destination}}/{{item}}" force=yes
+  with_items: shared_files
+  
 - name: Copy tenants from old host
   command: "cp {{symfony2_project_root}}/current/app/config/config_tenant* {{symfony2_release_destination}}/app/config/"
-
-- name: Create web/uploads symlink
-  file: state=link src={{symfony2_project_root}}/shared/web/uploads path={{symfony2_release_destination}}/web/uploads force=yes
+  when: symfony2_tenants

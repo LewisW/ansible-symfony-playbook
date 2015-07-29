@@ -4,63 +4,72 @@
   ignore_errors: yes
   register: acl_check
   tags:
+    - open_directories
     - shared_directories
 
 # Force skipping of ACLs
 - set_fact: skip_acl=true
   when: "acl_check.rc == 1"
   tags:
+    - open_directories
     - shared_directories
 
 - name: Enable permission to app folders (no ACL)
   file: path={{item}} mode=2775 recurse=yes state=directory
   when: skip_acl
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
 
 - name: Enable owner to app folders (no ACL)
   file: path={{item}} recurse=yes state=directory owner={{ansible_ssh_user}} group={{http_user}}
   when: skip_acl and not skip_chown
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
 
 - name: Make sure the app folders exist (ACL)
-  file: path={{item}} state=directory
+  file: path={{item}} state=directory follow=yes
   when: not skip_acl
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
 
 - name: Enable permission to app folders for apache (ACL)
   acl: name={{item}} entity={{http_user}} etype=user permissions=rwx state=present
   sudo: yes
   when: not skip_acl
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
 
 - name: Enable permission to app folders for ansible user (ACL)
   acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx state=present
   sudo: yes
   when: not skip_acl
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
 
 - name: Enable default permission to app folders for apache (ACL)
   acl: name={{item}} entity={{http_user}} etype=user permissions=rwx default=yes state=present
   sudo: yes
   when: not skip_acl
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
 
 - name: Enable default permission to app folders for ansible user (ACL)
   acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx default=yes state=present
   sudo: yes
   when: not skip_acl
-  with_items: shared_directories
+  with_items: open_directories
   tags:
+    - open_directories
     - shared_directories
