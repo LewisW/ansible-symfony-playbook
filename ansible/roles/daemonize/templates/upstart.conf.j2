@@ -4,8 +4,13 @@ respawn
 {% if daemonize_respawn_limit %}respawn limit {{daemonize_respawn_limit}}{% endif %}
 
 # Tell Upstart to start us after MySQL started and shut us down on system shutdown
-{% if daemonize_start_on %}start on {{daemonize_start_on}}{% endif %}
-{% if daemonize_stop_on %}stop on {{daemonize_stop_on}}{% endif %}
+{% if daemonize_start_on %}
+    start on {{daemonize_start_on}}
+{% endif %}
+
+{% if daemonize_stop_on %}
+    stop on {{daemonize_stop_on}}
+{% endif %}
 
 # Run as the www-data user and group (same as Apache is under in Ubuntu)
 setuid {{daemonize_uid}}
