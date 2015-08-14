@@ -17,9 +17,11 @@
     group=root
     mode=0744
 
+- debug: msg=daemonize_start_on
+
 - name: Force restart of the daemon
   sudo: true
   service: >
     name={{ daemonize_script_name }}
     state=restarted
-  when: daemonize_start_on|bool
+  when: daemonize_start_on != false
