@@ -25,6 +25,10 @@
 - name: Update the assets version
   shell: cd {{ symfony2_release_destination }} && if grep -q 'kachkaev/assets-version-bundle' composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} assets_version:set {{ ansible_date_time.epoch }} --env={{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
 
+- name: Clear the cache
+  shell: cd {{ symfony2_release_destination }} && {{symfony2_php_path}} {{symfony2_console_path}} cache:clear -e {{symfony2_project_env}} {{symfony2_project_console_opts}}
+  tags: ['app_cache']
+
 - name: Dump assets
   shell: cd {{ symfony2_release_destination }} && if grep -q 'symfony/assetic-bundle' composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} assetic:dump -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
   ignore_errors: yes
@@ -36,12 +40,15 @@
 
 - name: Clear Doctrine metadata cache
   shell: cd {{ symfony2_release_destination }} && if grep -q doctrine/doctrine-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-metadata -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  tags: ['app_cache']
 
 - name: Clear Doctrine result cache
   shell: cd {{ symfony2_release_destination }} && if grep -q doctrine/doctrine-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-result -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  tags: ['app_cache']
 
 - name: Clear Doctrine query cache
   shell: cd {{ symfony2_release_destination }} && if grep -q doctrine/doctrine-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:cache:clear-query -e {{symfony2_project_env}} {{symfony2_project_console_opts}}; fi
+  tags: ['app_cache']
 
 - include: backup.yml
   when: not skip_backup

@@ -41,7 +41,13 @@
 - name: "Create shared/{{item}} symlink"
   file: state=link src="{{symfony2_project_root}}/shared/{{item}}" path="{{symfony2_release_destination}}/{{item}}" force=yes
   with_items: shared_files
-  
+
+- name: Check we're not redeploying
+  command: "readlink -f {{symfony2_project_root}}/current"
+  register: current_path
+
+- debug: msg=current_path
+
 - name: Copy tenants from old host
-  command: "cp {{symfony2_project_root}}/current/app/config/config_tenant* {{symfony2_release_destination}}/app/config/"
-  when: symfony2_tenants
+  shell: "cp {{symfony2_project_root}}/current/app/config/config_tenant* {{symfony2_release_destination}}/app/config/"
+  when: current_path.stdout != symfony2_release_destination and symfony2_tenants
