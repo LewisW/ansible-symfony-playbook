@@ -10,5 +10,5 @@ COPY requirements.txt ansible/requirements.txt
 RUN /ansible_dependencies
 
 # Copy any files used in provisioning & provision
-COPY . ansible
+COPY . ansible/
 RUN /apt_cacher leeroy.vivait.co.uk; /ansible_setup && /graceful_shutdown
