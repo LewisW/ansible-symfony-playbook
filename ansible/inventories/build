@@ -1,0 +1,6 @@
+[webserver]
+localhost ansible_connection=local
+
+[build:children]
+webserver
+dbserver
