@@ -1,0 +1,6 @@
+symfony2_project_env: test
+symfony2_project_root: "{{ playbook_dir }}/../"
+symfony2_versioned_deployment: false
+mysql_root_password: root
+
+daemonize_start_on: false
