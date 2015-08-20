@@ -4,7 +4,7 @@ MAINTAINER Lewis Wright <lewis@allwrightythen.com>
 # Create the structure
 WORKDIR /project
 
-RUN mkdir -p app/config && touch app/config/parameters.yml.dist
+RUN mkdir -p app/config && echo "parameters: []" > app/config/parameters.yml.dist
 
 # Copy the role requirements and run them
 COPY install-dependencies.sh ansible/install-dependencies.sh
