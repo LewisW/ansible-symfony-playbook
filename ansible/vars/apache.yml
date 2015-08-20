@@ -1,5 +1,5 @@
 ---
-apache_packages: [apache2, apache2-mpm-prefork, apache2-utils]
+apache_packages: [apache2, apache2-utils]
 php_enable_apc: false
 
 php_conf_path: "{{ '/etc/php5/fpm' if 'php5-fpm' in php_packages else '/etc/php5/apache2' }}"
