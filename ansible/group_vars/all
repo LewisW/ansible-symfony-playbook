@@ -1,1 +1,5 @@
 override_parameters: []
+parameters: []
+mysql_databases: []
+mysql_users: []
+apache_vhosts: []
