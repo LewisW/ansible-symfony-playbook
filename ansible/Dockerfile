@@ -13,4 +13,7 @@ RUN /ansible_dependencies
 
 # Copy any files used in provisioning & provision
 COPY . ansible/
-RUN /apt_cacher leeroy.vivait.co.uk; /ansible_setup && /graceful_shutdown
+RUN /apt_cacher leeroy.vivait.co.uk; \
+    ansible-playbook ansible/setup.yml -i ansible/inventories/build \
+    -e "mysql_databases=[] mysql_users=[] apache_vhosts=[] override_parameters=[] parameters=[]" && \
+    /graceful_shutdown
