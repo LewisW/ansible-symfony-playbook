@@ -29,3 +29,9 @@
   template: src="php5_fpm.conf.j2" dest="{{ apache_server_root }}/conf.d/fpm.conf"
   when: ansible_os_family == 'RedHat' and 'php5-fpm' in php_packages
   notify: restart apache
+
+- name: Add user to www-data group
+  sudo: yes
+  user: name="{{ ansible_ssh_user }}" groups="{{http_user}}" append="yes"
+  when: not skip_permissions
+  register: add_group

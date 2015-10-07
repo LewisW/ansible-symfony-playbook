@@ -1,0 +1,29 @@
+---
+# If using AWS do a snapshot
+- local_action: >
+    rds
+    command="snapshot"
+    instance_name="{{ item.name }}"
+    snapshot="{{ item.name ~ "-" ~ symfony2_project_release | regex_replace('(^[^a-zA-Z])|(-{2,})|[^a-zA-Z0-9\-]', '') }}"
+    aws_access_key="{{ item.aws_access_key }}"
+    aws_secret_key="{{ item.aws_secret_key }}"
+    region="{{ item.region }}"
+  with_items: backup_rds_instances
+  run_once: true
+
+- command: python -c "import MySQLdb"
+  register: python_mysql
+  ignore_errors: yes
+
+# Backup databases normally
+- mysql_db: >
+    name="{{ item.name }}"
+    state=dump
+    target="{{symfony2_project_root}}/backup-{{ symfony2_project_release }}.sql.gz"
+    login_host="{{ item.host }}"
+    login_user="{{ item.username }}"
+    login_password="{{ item.password }}"
+  when: python_mysql.rc == 0
+  with_items: backup_mysql_databases
+  run_once: true
+

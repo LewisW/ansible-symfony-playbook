@@ -1,0 +1,9 @@
+---
+- name: Enable permission to app folders (no ACL)
+  file: path={{item}} mode=2775 recurse=yes state=directory
+  with_items: open_directories
+
+- name: Enable owner to app folders (no ACL)
+  file: path={{item}} recurse=yes state=directory owner={{ansible_ssh_user}} group={{http_user}}
+  with_items: open_directories
+  when: not skip_chown

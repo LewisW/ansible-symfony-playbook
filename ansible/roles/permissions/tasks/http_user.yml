@@ -1,0 +1,12 @@
+---
+# Deprecated - it's best just to specify the user manually
+# Work out the HTTP user
+- name: Discover HTTP user
+  shell: "ps axo user:50,pid,cmd | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d' ' -f1"
+  register: http_user_command
+  tags:
+    - always
+
+- set_fact: http_user="{{http_user_command.stdout}}"
+  tags:
+    - always

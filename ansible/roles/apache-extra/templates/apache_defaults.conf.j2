@@ -1,0 +1,8 @@
+ServerName localhost
+{% if override_http_user is defined and http_user is defined %}
+User {{http_user}}
+{% endif %}
+
+{% if syslog_name %}
+ErrorLog syslog:{{syslog_name}}
+{% endif %}

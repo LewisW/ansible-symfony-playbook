@@ -1,56 +1,17 @@
 ---
-# defaults file for symfony2
-
-symfony2_project_release: dev-master
-symfony2_project_branch: master
 symfony2_php_path: /usr/bin/php
 symfony2_console_path: "{{ symfony2_release_destination }}/app/console"
+symfony2_console_opts: ~
 
 symfony2_project_env: prod
 
-symfony2_versioned_deployment: true
-symfony2_project_console_opts: ~
-
 override_parameters: {}
 
-symfony2_project_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --optimize-autoloader -n'
-symfony2_project_source: '{{ playbook_dir }}/../'
-
-symfony2_maintenance_root: "{{symfony2_release_destination}}/ansible/maintenance"
+symfony2_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --optimize-autoloader -n'
 
 symfony2_release_destination: "{{symfony2_project_root}}"
-symfony2_final_destination: "{{ symfony2_project_root }}{{ '/current' if symfony2_versioned_deployment else '' }}"
-
-symfony2_tenants: false
-
-open_directories:
-  - "{{symfony2_release_destination}}/web/uploads/"
-  - "{{symfony2_release_destination}}/app/cache/"
-  - "{{symfony2_release_destination}}/app/logs/"
-  - "{{symfony2_release_destination}}/app/spool/"
-
-shared_files:
-  - "app/config/parameters.yml"
-  #- "app/config/tenants"
-  - "web/uploads"
-  #- "app/spool"
-
-# Disables all permission operations
-skip_permissions: false
-# Disables ACLs
-skip_acl: false
-# Disables change owner
-skip_chown: false
-# Disables backups
-skip_backup: false
 
 # Run migrations for versioned deployments by default
 symfony2_run_migrations: "{{symfony2_versioned_deployment}}"
 
-backup_rds_instances: []
-
-backup_mysql_databases: []
-#  - host: "{{override_parameters.database_host|default(parameters.database_host)}}"
-#    name: "{{override_parameters.database_name|default(parameters.database_name)}}"
-#    username: "{{override_parameters.database_user|default(parameters.database_user)}}"
-#    password: "{{override_parameters.database_password|default(parameters.database_password)}}"
+force_parameters: false

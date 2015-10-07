@@ -1,0 +1,3 @@
+---
+- name: Pull Rackspace monitoring scripts
+  git: repo=https://github.com/racker/rackspace-monitoring-agent-plugins-contrib.git dest=/usr/lib/rackspace-monitoring-agent/plugins

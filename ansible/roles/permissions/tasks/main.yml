@@ -1,0 +1,37 @@
+---
+- debug: msg="{{symfony2_versioned_deployment}}"
+
+- name: Reset owner to apache
+  sudo: yes
+  file: path={{symfony2_release_destination}} owner={{ansible_ssh_user}} group={{http_user}} recurse=yes
+  when: not skip_chown
+
+- name: Check for ACLs
+  shell: hash getfacl
+  ignore_errors: yes
+  register: acl_check
+  tags:
+    - open_directories
+    - shared_directories
+
+# Force skipping of ACLs
+- set_fact: skip_acl=true
+  when: "acl_check.rc == 1"
+  tags:
+    - open_directories
+    - shared_directories
+
+- include: acl.yml
+  sudo: yes
+  tags:
+    - open_directories
+    - shared_directories
+  when: not skip_acl
+
+- include: no_acl.yml
+  sudo: yes
+  tags:
+    - open_directories
+    - shared_directories
+  when: skip_acl
+

@@ -1,0 +1,26 @@
+---
+- name: Create the root directory.
+  sudo: yes
+  file: state=directory owner={{ansible_ssh_user}} group={{http_user}} path={{symfony2_project_root}}
+
+- name: Create the shared directory.
+  file: state=directory owner={{ansible_ssh_user}} group={{http_user}} path={{symfony2_project_root}}/shared
+
+- name: Create the release {{symfony2_project_release}} directory.
+  file: state=directory path={{symfony2_release_destination}}
+
+- debug: msg="{{item|dirname}}"
+  with_items: shared_files
+
+- name: Create shared files parent folders
+  file: state=directory path="{{symfony2_project_root}}/shared/{{item|dirname}}"
+  when: "item|dirname != ''"
+  with_items: shared_files
+
+- name: Create shared files
+  file: state=touch path="{{symfony2_project_root}}/shared/{{item}}"
+  with_items: shared_files
+
+- name: Create shared folders
+  file: state=directory path="{{symfony2_project_root}}/shared/{{item}}"
+  with_items: shared_directories

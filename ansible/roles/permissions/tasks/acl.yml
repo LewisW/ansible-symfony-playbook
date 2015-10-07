@@ -1,0 +1,24 @@
+---
+- name: Make sure the app folders exist (ACL)
+  file: path={{item}} state=directory follow=yes
+  with_items: open_directories
+
+- name: Enable permission to app folders for apache (ACL)
+  acl: name={{item}} entity={{http_user}} etype=user permissions=rwx state=present
+  with_items: open_directories
+  sudo: yes
+
+- name: Enable permission to app folders for ansible user (ACL)
+  acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx state=present
+  with_items: open_directories
+  sudo: yes
+
+- name: Enable default permission to app folders for apache (ACL)
+  acl: name={{item}} entity={{http_user}} etype=user permissions=rwx default=yes state=present
+  with_items: open_directories
+  sudo: yes
+
+- name: Enable default permission to app folders for ansible user (ACL)
+  acl: name={{item}} entity={{ansible_ssh_user}} etype=user permissions=rwx default=yes state=present
+  with_items: open_directories
+  sudo: yes

@@ -1,0 +1,18 @@
+---
+- local_action: shell cd {{symfony2_project_source}} && git fetch -t && git describe --abbrev=0 --tags
+  register: current_version_command
+  sudo: yes
+  ignore_errors: yes
+  tags:
+    - always
+
+- set_fact: symfony2_project_release="{{current_version_command.stdout}}"
+  when: "current_version_command.rc == 0"
+  tags:
+    - always
+
+- set_fact: symfony2_project_release="dev-master"
+  when: "current_version_command.rc != 0"
+  tags:
+    - always
+

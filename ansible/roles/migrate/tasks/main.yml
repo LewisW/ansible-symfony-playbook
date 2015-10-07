@@ -1,0 +1,19 @@
+---
+
+- name: Put maintenance page live
+  file: state=link src={{symfony2_maintenance_root}} path={{symfony2_project_root}}/current
+  when: symfony2_versioned_deployment
+  notify:
+    - Run migrations
+
+- name: Put version live
+  file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
+  when: symfony2_versioned_deployment
+
+- service: name=php5-fpm state=reloaded
+  when: "'php5-fpm' in php_packages"
+
+- name: Clear the opcache for CLI
+  sudo: yes
+  command: "cachetool opcache:reset --cli"
+  when: php_opcache_enabled_in_ini and php_opcache_enable_cli

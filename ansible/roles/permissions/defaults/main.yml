@@ -1,0 +1,18 @@
+---
+symfony2_release_destination: "{{symfony2_project_root}}"
+
+# No trailing slashes
+open_directories:
+  - "{{symfony2_release_destination}}/web/uploads"
+  - "{{symfony2_release_destination}}/app/cache"
+  - "{{symfony2_release_destination}}/app/logs"
+  - "{{symfony2_release_destination}}/app/spool"
+
+# Disables all permission operations
+skip_permissions: false
+# Disables ACLs
+skip_acl: false
+# Disables change owner
+skip_chown: false
+
+http_user: www-data

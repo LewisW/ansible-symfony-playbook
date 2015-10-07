@@ -1,0 +1,8 @@
+---
+- name: Sync the source code to the destination
+  synchronize: src={{symfony2_project_source}} dest={{symfony2_release_destination}} archive=yes owner=no rsync_opts="--exclude=.git --exclude=.gitkeep"
+  when: symfony2_project_source is defined
+
+- name: Pull sources from the repository.
+  git: repo={{symfony2_project_repo}} dest={{symfony2_release_destination}} version={{symfony2_project_branch}} key_file=/root/.ssh/deployment_id_rsa accept_hostkey=yes
+  when: symfony2_project_repo is defined and ssh_deployment_key is defined

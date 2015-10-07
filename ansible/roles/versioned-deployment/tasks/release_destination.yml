@@ -1,0 +1,7 @@
+---
+- include: determine_version.yml
+  when: symfony2_project_release is undefined
+
+- set_fact: symfony2_release_destination="{{symfony2_project_root}}/releases/{{symfony2_project_release}}"
+  tags:
+    - always

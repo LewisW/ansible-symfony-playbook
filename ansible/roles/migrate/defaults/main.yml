@@ -1,0 +1,7 @@
+---
+symfony2_maintenance_root: "{{symfony2_release_destination}}/ansible/maintenance"
+symfony2_release_destination: "{{symfony2_project_root}}"
+php_packages: []
+
+php_opcache_enabled_in_ini: false
+php_opcache_enable_cli: false

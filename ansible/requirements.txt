@@ -1,10 +1,10 @@
-geerlingguy.apache,1.3.1
-geerlingguy.composer,1.0.3
+geerlingguy.apache,1.3.3
+geerlingguy.composer,1.2.0
 geerlingguy.firewall,1.0.5
 geerlingguy.git,1.0.4
-geerlingguy.mysql,1.5.0
-geerlingguy.ntp,1.0.2
-geerlingguy.php,1.5.0
+geerlingguy.mysql,1.5.1
+geerlingguy.ntp,1.0.4
+geerlingguy.php,1.6.4
 geerlingguy.php-xdebug,1.1.3
 geerlingguy.java,1.1.0
 geerlingguy.elasticsearch,1.0.5
@@ -13,3 +13,4 @@ AbdoulNdiaye.Blackfire,v1.0.2
 geerlingguy.repo-epel
 geerlingguy.repo-remi
 mashimom.oh-my-zsh
+alekseyp.papertrail,v0.2

@@ -1,0 +1,26 @@
+---
+symfony2_versioned_deployment: false
+symfony2_project_branch: master
+symfony2_project_source: '{{ playbook_dir }}/../'
+symfony2_release_destination: "{{symfony2_project_root}}"
+
+symfony2_tenants: false
+
+shared_files:
+  - "app/config/parameters.yml"
+
+shared_directories:
+  #- "app/config/tenants"
+  - "web/uploads"
+  #- "app/spool"
+
+# Disables all permission operations
+#skip_permissions: false
+# Disables ACLs
+#skip_acl: false
+# Disables change owner
+#skip_chown: false
+# Disables backups
+#skip_backup: false
+
+http_user: www-data

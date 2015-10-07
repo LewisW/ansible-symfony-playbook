@@ -1,21 +1,4 @@
 ---
-- include: http_user.yml
-  when: http_user is not defined
-
-# Deploy it in to a versioned directory
-- include: versioned_deployment.yml
-  when: symfony2_versioned_deployment
-
-- name: Reset owner to apache
-  sudo: yes
-  file: path={{symfony2_release_destination}} owner={{ansible_ssh_user}} group={{http_user}} recurse=yes
-  when: not skip_permissions and not skip_chown
-
-- include: alternative-directories.yml
-
-# Setup permissions
-- include: permissions.yml
-  when: not skip_permissions
-
-# Perform Symfony specific actions
-- include: symfony.yml
+- include: htaccess.yml
+- include: generate_parameters.yml
+- include: commands.yml

@@ -1,0 +1,6 @@
+---
+- include: release_destination.yml
+- include: structure.yml
+- include: tenants.yml
+- include: sync.yml
+- include: symlinks.yml

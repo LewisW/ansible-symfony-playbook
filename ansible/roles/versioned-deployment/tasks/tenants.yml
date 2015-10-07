@@ -1,0 +1,10 @@
+---
+- name: Check we're not redeploying
+  command: "readlink -f {{symfony2_project_root}}/current"
+  register: current_path
+
+- debug: msg=current_path
+
+- name: Copy tenants from old host
+  shell: "cp {{symfony2_project_root}}/current/app/config/config_tenant* {{symfony2_release_destination}}/app/config/"
+  when: current_path.stdout != symfony2_release_destination and symfony2_tenants

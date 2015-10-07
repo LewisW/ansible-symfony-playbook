@@ -1,0 +1,11 @@
+---
+- name: Check for an environment specific htaccess
+  stat: path={{ symfony2_release_destination }}/web/.htaccess.{{symfony2_project_env}}
+  register: htaccess_dist
+
+- stat: path={{ symfony2_release_destination }}/web/.htaccess
+  register: htaccess
+
+- name: Create htaccess symlink
+  file: state=link src={{ symfony2_release_destination }}/web/.htaccess.{{symfony2_project_env}} path={{ symfony2_release_destination }}/web/.htaccess
+  when: htaccess_dist.stat.exists and not htaccess.stat.exists

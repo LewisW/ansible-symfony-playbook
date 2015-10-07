@@ -1,0 +1,14 @@
+---
+- debug: msg="{{symfony2_project_root}}/shared/{{item}}"
+  with_items: shared_files
+
+- debug: msg="{{symfony2_release_destination}}/{{item}}"
+  with_items: shared_files
+
+- name: Create shared files' symlinks
+  file: state=link src="{{symfony2_project_root}}/shared/{{item}}" path="{{symfony2_release_destination}}/{{item}}" force=yes
+  with_items: shared_files
+
+- name: Create shared folders symlinks
+  file: state=link src="{{symfony2_project_root}}/shared/{{item}}" path="{{symfony2_release_destination}}/{{item}}" force=yes
+  with_items: shared_directories
