@@ -38,8 +38,15 @@
     # Start any other services prior
     - { role: services, tags: ['services'] }
     
-    # Deploy our application
+    - { role: versioned-deployment, when: "symfony2_versioned_deployment is defined and symfony2_versioned_deployment" }
+
+    - { role: permissions, when: "skip_permissions is undefined or not skip_permissions" }
+
     - { role: symfony2 }
+
+    - { role: backup }
 
     # Example of a daemon
     #- { role: daemonize, daemonize_command: 'transdoc:callbacks:start', daemonize_script_name: transdoc-callback, tags: ['services'] }
+
+    - { role: migrate }

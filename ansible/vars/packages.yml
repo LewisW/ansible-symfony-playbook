@@ -16,8 +16,7 @@ php_packages:
   - php5-common
   - php5-mysql
   - php5-gd
-  - php5-sqlite
   - php5-dev
   # Needed for MySQL backup:
   - python-mysqldb
-#  - php5-fpm - Uncomment to enable PHP FPM
+  - php5-fpm

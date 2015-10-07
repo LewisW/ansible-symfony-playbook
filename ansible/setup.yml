@@ -36,7 +36,7 @@
     - { role: bash }
     #    - { role: mashimom.oh-my-zsh, ohmyzsh_theme: "lambda", ohmyzsh.user: ansible_ssh_user }
     - { role: geerlingguy.apache, sudo: yes }
-    - { role: apache_extra, sudo: yes }
+    - { role: apache-extra, sudo: yes }
     - { role: geerlingguy.php, sudo: yes }
     - { role: php-extra, sudo: yes }
     - { role: php-twig, sudo: yes }
@@ -65,15 +65,12 @@
   vars_files:
     - ../app/config/parameters.yml.dist
     - vars/newrelic.yml
+    - vars/papertrail.yml
   roles:
     # Install new relic
     - { role: franklinkim.php5-newrelic, when: newrelic_license_key is defined }
-
-- hosts: search
-  sudo: yes
-  roles:
-    - { role: geerlingguy.java }
-    - { role: geerlingguy.elasticsearch }
+    - { role: rackspace-monitoring }
+    - { role: alekseyp.papertrail }
 
 # Vagrant
 - hosts: vagrant
