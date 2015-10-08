@@ -12,41 +12,68 @@ LOGFILE="/var/log/${NAME}.log"
 DAEMON="{{daemonize_bin}}"
 DAEMON_OPTS="{{daemonize_bin_opts}} {{daemonize_command}} {{daemonize_opts}}"
 
-START_OPTS="--start --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} -- ${DAEMON_OPTS}"
+START_OPTS="--start --background --make-pidfile --pidfile ${PIDFILE} --chuid {{daemonize_uid}}:{{daemonize_gid}} --exec ${DAEMON} -- ${DAEMON_OPTS}"
 STOP_OPTS="--stop --pidfile ${PIDFILE}"
  
 test -x "$DAEMON" || exit 0
  
 set -e
+
+restart()
+{
+    /sbin/start-stop-daemon $STOP_OPTS
+    sleep 1
+    /sbin/start-stop-daemon $START_OPTS >> $LOGFILE
+}
  
 case "$1" in
     start)
-        echo -n "Starting ${DESC}: "
+        if [ -x /sbin/initctl ] && /sbin/initctl version 2>/dev/null | grep -q upstart; then
+            initctl start ${NAME}
+        else
+            echo -n "Starting ${DESC}: "
 
-        if [ -e $PIDFILE ]; then
-                echo "Already running."
-                exit 0
+            if [ -e $PIDFILE ]; then
+                    echo "Already running."
+                    exit 0
+            fi
+
+            /sbin/start-stop-daemon $START_OPTS >> $LOGFILE
+            echo "$NAME."
         fi
 
-        /sbin/start-stop-daemon $START_OPTS >> $LOGFILE
-        echo "$NAME."
         ;;
     stop)
-        echo -n "Stopping $DESC: "
-        /sbin/start-stop-daemon $STOP_OPTS
-        echo "$NAME."
-        rm -f $PIDFILE
+        if [ -x /sbin/initctl ] && /sbin/initctl version 2>/dev/null | grep -q upstart; then
+            initctl stop ${NAME}
+        else
+            echo -n "Stopping $DESC: "
+            /sbin/start-stop-daemon $STOP_OPTS
+            echo "$NAME."
+            rm -f $PIDFILE
+        fi
         ;;
     restart|force-reload)
-        echo -n "Restarting $DESC: "
-        /sbin/start-stop-daemon $STOP_OPTS
-        sleep 1
-        /sbin/start-stop-daemon $START_OPTS >> $LOGFILE
-        echo "$NAME."
+        if [ -x /sbin/initctl ] && /sbin/initctl version 2>/dev/null | grep -q upstart; then
+            initctl restart ${NAME}
+        else
+            echo -n "Restarting $DESC: "
+            restart
+            echo "$NAME."
+        fi
+        ;;
+    reload)
+        if [ -x /sbin/initctl ] && /sbin/initctl version 2>/dev/null | grep -q upstart; then
+            initctl reload ${NAME}
+        else
+            echo -n "Restarting/reloading $DESC: "
+            restart
+            echo "$NAME."
+        fi
         ;;
     *)
         N=/etc/init.d/$NAME
-        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        echo "Usage: $N {start|stop|restart|force-reload|reload}" >&2
         exit 1
         ;;
 esac
