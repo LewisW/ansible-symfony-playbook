@@ -14,9 +14,6 @@
     - shell: service elasticsearch start
       sudo: yes
       tags: ['services'] 
-    - name: Wait for elastic search to boot
-      wait_for: port=9200 timeout=60
-      tags: ['services']
     
 # Webservers
 - hosts: webserver
@@ -25,6 +22,10 @@
   vars:
     services:
       - apache2
+  # Uncomment for tenanted apps - replace the path to PHP with the tenanted one
+  #symfony2_php_path: "{{ symfony2_release_destination }}/bin/tenant"
+  #symfony2_console_path: "-e {{symfony2_project_env}} -P 0 php {{ symfony2_release_destination }}/app/console"
+
   vars_files:
     - ../app/config/parameters.yml.dist
     - vars/mysql.yml
@@ -50,3 +51,9 @@
     #- { role: daemonize, daemonize_command: 'transdoc:callbacks:start', daemonize_script_name: transdoc-callback, tags: ['services'] }
 
     - { role: migrate }
+
+- hosts: search
+  tasks:
+    - name: Wait for elastic search to boot
+      wait_for: port=9200 timeout=60
+      tags: ['services']
