@@ -20,3 +20,5 @@ php_packages:
   # Needed for MySQL backup:
   - python-mysqldb
   - php5-fpm
+java_packages:
+  - openjdk-7-jre
