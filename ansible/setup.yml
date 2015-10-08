@@ -66,11 +66,13 @@
     - ../app/config/parameters.yml.dist
     - vars/newrelic.yml
     - vars/papertrail.yml
+    - vars/firewall.yml
   roles:
     # Install new relic
     - { role: franklinkim.php5-newrelic, when: newrelic_license_key is defined }
     - { role: rackspace-monitoring }
     - { role: alekseyp.papertrail }
+    - { role: firewall }
 
 # Vagrant
 - hosts: vagrant

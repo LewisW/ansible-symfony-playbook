@@ -1,0 +1,11 @@
+---
+# Enable all ServiceNet connections
+- ufw: rule=allow interface=eth1 direction=in
+
+- ufw: rule=allow port=ssh delete=yes
+
+- ufw: rule=allow port=http from="{{item}}"
+  with_items: trusted_ip_addresses
+
+- ufw: rule=allow port=ssh from="{{item}}"
+  with_items: trusted_ip_addresses
