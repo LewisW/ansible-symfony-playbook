@@ -15,5 +15,5 @@ RUN /ansible_dependencies
 COPY . ansible/
 RUN /apt_cacher leeroy.vivait.co.uk; \
     ansible-playbook ansible/setup.yml -i ansible/inventories/build \
-    -e "mysql_databases=[] mysql_users=[] apache_vhosts=[] override_parameters=[] parameters=[]" && \
+    -e "mysql_databases=[] mysql_users=[] apache_vhosts=[] override_parameters=[] parameters=[] apache_create_vhosts=false" && \
     /graceful_shutdown
