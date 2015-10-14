@@ -55,6 +55,11 @@
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
 
+- hosts: cache
+  sudo: yes
+  roles:
+    - { role: geerlingguy.memcached }
+
 - hosts: search
   sudo: yes
   roles:

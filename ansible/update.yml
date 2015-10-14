@@ -15,6 +15,15 @@
       sudo: yes
       tags: ['services'] 
     
+# Cache server
+- hosts: cache
+  vars:
+    services:
+      - memcached
+  roles:
+    # Start any services prior
+    - { role: services, tags: ['services'] }
+
 # Webservers
 - hosts: webserver
   gather_facts: yes

@@ -1,4 +1,13 @@
 ---
+- name: Check we're not redeploying
+  command: "readlink -f {{symfony2_project_root}}/current"
+  register: current_path
+
+- debug: msg=current_path
+
+- name: Store a reference to the previous version
+  file: state=link src="{{current_path.stdout}}" path={{symfony2_project_root}}/previous
+  when: symfony2_versioned_deployment and current_path.stdout != ''
 
 - name: Put maintenance page live
   file: state=link src={{symfony2_maintenance_root}} path={{symfony2_project_root}}/current
