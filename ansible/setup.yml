@@ -34,6 +34,7 @@
     # Install the basic server
     - { role: system-packages }
     - { role: bash }
+    # Disabled until this PR is accepted: https://github.com/mashimom/ohmyzsh_plbk/pull/1
     #    - { role: mashimom.oh-my-zsh, ohmyzsh_theme: "lambda", ohmyzsh.user: ansible_ssh_user }
     - { role: geerlingguy.apache, sudo: yes }
     - { role: apache-extra, sudo: yes }
