@@ -1,9 +1,14 @@
-[webserver]
+[build]
 localhost ansible_connection=local
 
-[dbserver]
-localhost ansible_connection=local
+[webserver:children]
+build
 
-[build:children]
-webserver
-dbserver
+[dbserver:children]
+build
+
+[cache:children]
+build
+
+[search:children]
+build
