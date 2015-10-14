@@ -11,6 +11,7 @@
   when: symfony2_versioned_deployment
 
 - service: name=php5-fpm state=reloaded
+  sudo: yes
   when: "'php5-fpm' in php_packages"
 
 - name: Clear the opcache for CLI
