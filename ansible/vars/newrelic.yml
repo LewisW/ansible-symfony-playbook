@@ -1,3 +1,2 @@
 ---
-php5_newrelic:
-  - { section: newrelic, option: appname, value: "{{app_name|default(apache_vhosts[0].servername)}}" }
+php5_newrelic_appname: "{{app_name|default(apache_vhosts[0].servername)}}"
