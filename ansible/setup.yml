@@ -75,6 +75,7 @@
     - vars/firewall.yml
   roles:
     # Install new relic
+    - { role: franklinkim.newrelic, when: newrelic_license_key is defined }
     - { role: franklinkim.php5-newrelic, when: newrelic_license_key is defined }
     - { role: rackspace-monitoring }
     - { role: alekseyp.papertrail }
