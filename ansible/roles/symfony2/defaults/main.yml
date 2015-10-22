@@ -15,3 +15,5 @@ symfony2_release_destination: "{{symfony2_project_root}}"
 symfony2_run_migrations: "{{symfony2_versioned_deployment}}"
 
 force_parameters: false
+
+migration_command: "cd {{ symfony2_release_destination }} && if grep -q doctrine-migrations-bundle composer.lock; then {{symfony2_php_path}} {{symfony2_console_path}} doctrine:migrations:migrate -n --env={{symfony2_project_env}} {{symfony2_console_opts}}; fi"
