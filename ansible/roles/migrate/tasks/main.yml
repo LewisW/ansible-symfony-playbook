@@ -12,8 +12,10 @@
 - name: Put maintenance page live
   file: state=link src={{symfony2_maintenance_root}} path={{symfony2_project_root}}/current
   when: symfony2_versioned_deployment
-  notify:
-    - Run migrations
+  
+- name: Run migrations
+  shell: "{{ migration_command }}"
+  when: symfony2_run_migrations and migration_command|default('') != ''
 
 - name: Put version live
   file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
