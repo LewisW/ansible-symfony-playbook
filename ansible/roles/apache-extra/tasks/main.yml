@@ -30,6 +30,22 @@
   when: ansible_os_family == 'RedHat' and 'php5-fpm' in php_packages
   notify: restart apache
 
+- name: Add apache vhosts configuration. (Debian)
+  template:
+    src: "status_vhost.conf.j2"
+    dest: "{{ apache_conf_path }}/sites-available/00-status.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: Add vhost symlink in sites-enabled. (Debian)
+  file:
+    src: "{{ apache_conf_path }}/sites-available/00-status.conf"
+    dest: "{{ apache_conf_path }}/sites-enabled/00-status.conf"
+    state: link
+  notify: restart apache
+
 - name: Add user to www-data group
   sudo: yes
   user: name="{{ ansible_ssh_user }}" groups="{{http_user}}" append="yes"

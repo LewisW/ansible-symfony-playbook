@@ -3,3 +3,6 @@ http_user: www-data
 # Disables all permission operations
 skip_permissions: false
 syslog_name: apache
+
+fpm_status_path: '/fpm-status'
+fpm_ping_path: '/fpm-ping'

@@ -1,0 +1,18 @@
+---
+fpm_max_children: 10
+# If 0, then defaults to min_spare_servers + (max_spare_servers - min_spare_servers) / 2
+fpm_start_servers: 0
+fpm_min_spare_servers: 2
+fpm_max_spare_servers: 5
+
+fpm_process_idle_timeout: 10s;
+fpm_max_requests: 1000
+fpm_request_terminate_timeout: 300s
+fpm_request_slowlog_timeout: 5s
+fpm_status_path: '/fpm-status'
+fpm_ping_path: '/fpm-ping'
+
+# Global settings
+fpm_emergency_restart_threshold: 10
+fpm_emergency_restart_interval: 1m
+fpm_process_control_timeout: 10s

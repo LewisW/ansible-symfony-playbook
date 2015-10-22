@@ -1,0 +1,20 @@
+<VirtualHost *:80>
+    ServerName localhost
+    DocumentRoot "/"
+
+    {% if 'php5-fpm' in php_packages %}
+        <FilesMatch "^fpm-ping|fpm-status$">
+            Require all granted
+            Order allow,deny
+            Allow from all
+            SetHandler "proxy:unix:/run/php5-fpm.sock|fcgi://localhost/"
+        </FilesMatch>
+    {% endif %}
+
+    <Location /server-status>
+        Require all granted
+        Order allow,deny
+        Allow from all
+        SetHandler server-status
+    </Location>
+</VirtualHost>
