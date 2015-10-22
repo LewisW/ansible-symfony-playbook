@@ -1,0 +1,16 @@
+---
+- name: Use syslog for php-fpm
+  lineinfile: state="present" dest="{{ php_conf_path }}/php-fpm.conf" regexp=";?error_log = .+$" line="error_log = syslog"
+  when: syslog_name != ""
+
+- name: Set emergency restart threshold for php-fpm
+  lineinfile: state="present" dest="{{ php_conf_path }}/php-fpm.conf" regexp=";?emergency_restart_threshold = .+$" line="emergency_restart_threshold = {{fpm_emergency_restart_threshold}}"
+
+- name: Set emergency restart interval for php-fpm
+  lineinfile: state="present" dest="{{ php_conf_path }}/php-fpm.conf" regexp=";?emergency_restart_interval = .+$" line="emergency_restart_interval = {{fpm_emergency_restart_interval}}"
+
+- name: Set process control timeout for php-fpm
+  lineinfile: state="present" dest="{{ php_conf_path }}/php-fpm.conf" regexp=";?process_control_timeout = .+$" line="process_control_timeout = {{fpm_process_control_timeout}}"
+
+- name: Use custom pool conf
+  template: src="www.conf.j2" dest="{{ php_conf_path }}/pool.d/www.conf"
