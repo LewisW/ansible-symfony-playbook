@@ -1,4 +1,4 @@
-FROM lewisw/docker-test-runner
+FROM lewisw/ansible-symfony-playbook
 MAINTAINER Lewis Wright <lewis@allwrightythen.com>
 
 # Create the structure
