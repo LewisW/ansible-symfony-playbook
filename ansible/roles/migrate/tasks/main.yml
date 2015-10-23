@@ -1,9 +1,9 @@
 ---
 - name: Check we're not redeploying
-  command: "readlink -f {{symfony2_project_root}}/current"
+  command: "[ -d '{{symfony2_project_root}}/current' ] && readlink -f '{{symfony2_project_root}}/current'"
   register: current_path
 
-- debug: msg=current_path
+- debug: msg="{{current_path}}"
 
 - name: Store a reference to the previous version
   file: state=link src="{{current_path.stdout}}" path={{symfony2_project_root}}/previous
