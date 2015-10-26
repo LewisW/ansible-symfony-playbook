@@ -17,4 +17,4 @@ setuid {{daemonize_uid}}
 setgid {{daemonize_gid}}
 
 # The command Upstart should execute to start our daemon
-exec {{daemonize_bin}} {{daemonize_bin_opts}} {{daemonize_command}} {{daemonize_opts}}
+exec {{daemonize_bin}} {{daemonize_bin_opts}} {{daemonize_command}} {{daemonize_opts}}{% if syslog_name %} >/dev/kmsg 2>&1{% endif %}
