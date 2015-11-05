@@ -18,7 +18,7 @@ COPY app/config/parameters.yml.dist app/config/parameters.yml.dist
 RUN /apt_cacher leeroy.vivait.co.uk; /ansible_setup && /graceful_shutdown
 
 # Copy any composer files and pre-download them
-COPY composer.* ./
+COPY composer.json composer.lock ./
 RUN /composer_setup
 
 # Try and provision, so we can atleast cache
