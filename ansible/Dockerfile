@@ -12,7 +12,8 @@ COPY requirements.txt ansible/requirements.txt
 RUN /ansible_dependencies
 
 # Copy any files used in provisioning & provision
-COPY . .
+COPY . ansible/
+RUN ls -alr
 RUN /apt_cacher leeroy.vivait.co.uk; \
     ansible-playbook ansible/setup.yml -i ansible/inventories/build \
     -e "mysql_databases=[] mysql_users=[] apache_vhosts=[] override_parameters=[] parameters=[] apache_create_vhosts=false" && \
