@@ -19,8 +19,8 @@ RUN /apt_cacher leeroy.vivait.co.uk; /ansible_setup && /graceful_shutdown
 
 # Copy any composer files and pre-download them
 COPY composer.json composer.lock ./
-RUN ${IP} leeroy.vivait.co.uk >> /etc/hosts; /composer_setup
+RUN echo "${IP} leeroy.vivait.co.uk" >> /etc/hosts; /composer_setup
 
 # Try and provision, so we can atleast cache
 COPY ./ ./
-RUN ${IP} leeroy.vivait.co.uk >> /etc/hosts; /ansible_update && /graceful_shutdown
+RUN echo "${IP} leeroy.vivait.co.uk" >> /etc/hosts; /ansible_update && /graceful_shutdown
