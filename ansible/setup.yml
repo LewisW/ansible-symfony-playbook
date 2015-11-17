@@ -50,7 +50,7 @@
     - { role: geerlingguy.composer, sudo: yes }
 
     # Install cachetool
-    - { role: cachetool, sudo: yes, when: php_opcache_enabled_in_ini }
+    - { role: cachetool, sudo: yes, when: php_opcache_enabled_in_ini|bool }
 
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }

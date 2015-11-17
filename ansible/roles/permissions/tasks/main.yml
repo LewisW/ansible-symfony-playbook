@@ -4,7 +4,7 @@
 - name: Reset owner to apache
   sudo: yes
   file: path={{symfony2_release_destination}} owner={{ansible_ssh_user}} group={{http_user}} recurse=yes
-  when: not skip_chown
+  when: not skip_chown|bool
 
 - name: Check for ACLs
   shell: hash getfacl
@@ -26,12 +26,12 @@
   tags:
     - open_directories
     - shared_directories
-  when: not skip_acl
+  when: not skip_acl|bool
 
 - include: no_acl.yml
   sudo: yes
   tags:
     - open_directories
     - shared_directories
-  when: skip_acl
+  when: skip_acl|bool
 

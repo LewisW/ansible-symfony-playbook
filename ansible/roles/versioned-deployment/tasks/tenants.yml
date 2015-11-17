@@ -7,4 +7,4 @@
 
 - name: Copy tenants from old host
   shell: "cp {{symfony2_project_root}}/current/app/config/config_tenant* {{symfony2_release_destination}}/app/config/"
-  when: current_path.stdout != symfony2_release_destination and symfony2_tenants
+  when: current_path.stdout != symfony2_release_destination and symfony2_tenants|bool

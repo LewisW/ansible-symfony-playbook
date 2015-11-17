@@ -8,19 +8,19 @@
 
 - name: Store a reference to the previous version
   file: state=link src="{{current_path.stdout}}" path={{symfony2_project_root}}/previous
-  when: symfony2_versioned_deployment and current_path.stdout != ''
+  when: symfony2_versioned_deployment|bool and current_path.stdout != ''
 
 - name: Put maintenance page live
   file: state=link src={{symfony2_maintenance_root}} path={{symfony2_project_root}}/current
-  when: symfony2_versioned_deployment
-  
+  when: symfony2_versioned_deployment|bool
+
 - name: Run migrations
   shell: "{{ migration_command }}"
-  when: symfony2_run_migrations and migration_command|default('') != ''
+  when: symfony2_run_migrations|bool and migration_command|default('') != ''
 
 - name: Put version live
   file: state=link src={{ symfony2_release_destination }} path={{symfony2_project_root}}/current
-  when: symfony2_versioned_deployment
+  when: symfony2_versioned_deployment|bool
 
 - service: name=php5-fpm state=reloaded
   sudo: yes
@@ -29,4 +29,4 @@
 - name: Clear the opcache for CLI
   sudo: yes
   command: "cachetool opcache:reset --cli"
-  when: php_opcache_enabled_in_ini and php_opcache_enable_cli
+  when: php_opcache_enabled_in_ini|bool and php_opcache_enable_cli|bool

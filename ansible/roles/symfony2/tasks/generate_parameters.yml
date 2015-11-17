@@ -6,4 +6,4 @@
 
 - name: Compile app/config/parameters.yml from parameters.yml
   template: src=parameters.yml.j2 dest={{ symfony2_release_destination }}/app/config/parameters.yml
-  when: not parameters_config.stat.exists or parameters_config.stat.size == 0 or force_parameters
+  when: not parameters_config.stat.exists or parameters_config.stat.size == 0 or force_parameters|bool

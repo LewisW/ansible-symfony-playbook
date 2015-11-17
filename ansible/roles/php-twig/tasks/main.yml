@@ -57,4 +57,4 @@
     src: "{{ php_extension_conf_path }}/twig.ini"
     dest: /etc/php5/cli/conf.d/twig.ini
     state: link
-  when: php_cli_path.stat.isdir is defined and php_cli_path.stat.isdir
+  when: php_cli_path.stat.isdir is defined and php_cli_path.stat.isdir|bool

@@ -48,9 +48,9 @@
     # Start any other services prior
     - { role: services, tags: ['services'] }
     
-    - { role: versioned-deployment, when: "symfony2_versioned_deployment is defined and symfony2_versioned_deployment" }
+    - { role: versioned-deployment, when: "symfony2_versioned_deployment is defined and symfony2_versioned_deployment|bool" }
 
-    - { role: permissions, when: "skip_permissions is undefined or not skip_permissions" }
+    - { role: permissions, when: "skip_permissions is undefined or not skip_permissions|bool" }
 
     - { role: symfony2 }
 

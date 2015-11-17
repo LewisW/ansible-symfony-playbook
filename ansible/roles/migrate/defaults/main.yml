@@ -1,4 +1,8 @@
 ---
+# Run migrations for versioned deployments by default
+#symfony2_run_migrations: symfony2_versioned_deployment|default(no)
+symfony2_run_migrations: "{{symfony2_versioned_deployment|bool}}"
+
 symfony2_maintenance_root: "{{symfony2_release_destination}}/ansible/maintenance"
 symfony2_release_destination: "{{symfony2_project_root}}"
 php_packages: []
