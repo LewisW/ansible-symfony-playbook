@@ -10,5 +10,3 @@ daemonize_opts: '-e {{symfony2_project_env}}'
 
 daemonize_gid: "{{http_user|default('www-data')}}"
 daemonize_uid: "{{ansible_ssh_user|default('www-data')}}"
-
-syslog_name: apache: ~
