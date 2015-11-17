@@ -10,6 +10,6 @@ mysql_users:
     password: "{{override_parameters.database_password|default(parameters.database_password)}}"
     priv: "{{override_parameters.database_name|default(parameters.database_name)}}.*:ALL"
 
-mysql_packages:
-  - mysql-common-5.6
-  - mysql-server-5.6
+#mysql_packages:
+#  - mysql-common-5.6
+#  - mysql-server-5.6
