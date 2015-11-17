@@ -1,12 +1,4 @@
 ---
-# defaults file for symfony2
-
 symfony2_project_release: dev-master
-
 backup_rds_instances: []
-
 backup_mysql_databases: []
-#  - host: "{{override_parameters.database_host|default(parameters.database_host)}}"
-#    name: "{{override_parameters.database_name|default(parameters.database_name)}}"
-#    username: "{{override_parameters.database_user|default(parameters.database_user)}}"
-#    password: "{{override_parameters.database_password|default(parameters.database_password)}}"
