@@ -3,7 +3,7 @@ cd $(dirname $0)
 
 if ! hash ansible-playbook 2>/dev/null; then
 	sudo easy_install pip
-	sudo -H pip install ansible markupsafe --allow-external mysql-connector-python mysql-connector-python --quiet
+	sudo -H pip install ansible==1.9.1 markupsafe --allow-external mysql-connector-python mysql-connector-python --quiet
 	sudo -H pip install mysql-python boto
 fi
 
