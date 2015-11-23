@@ -7,7 +7,7 @@ symfony2_project_env: prod
 
 override_parameters: {}
 
-symfony2_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --optimize-autoloader -n'
+symfony2_composer_opts: '{{ "--no-dev" if symfony2_project_env == "prod" else "" }} --prefer-dist --optimize-autoloader -n'
 
 symfony2_release_destination: "{{symfony2_project_root}}"
 
