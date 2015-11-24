@@ -1,18 +1,22 @@
-# Adding to your repository
+
+# Contributing
+The intention of this repository is to sit inside your main repository and be customised and tweaked. Everything apart from the roles, is intended as a starting point, and so should be customised as you see fit. However, should you wish to receive upstream changes or contribute local changes, here are some instructions.
+
+## Adding to your repository
  
 ```bash
 git remote add -f ansible https://github.com/LewisW/ansible-symfony-playbook.git
 git merge --squash ansible/master
 ```
 
-# Pulling updates & changes
+## Pulling updates & changes
 ```bash
 git fetch ansible
 git merge --squash ansible/master
 ```
 
-# Pushing back changes
-## Cherry picking an ansible only commit
+## Pushing back changes
+### Cherry picking an ansible only commit
 If the change you want to pash back upstream is in a commit that is separate to any changes that you don't want to push (i.e. doesn't contain any project related commmits), simple switch to the ansible branch and cherry pick the changes from your git log:
 ```bash
 git checkout ansible
