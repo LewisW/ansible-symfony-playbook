@@ -8,6 +8,18 @@ git remote add -f ansible https://github.com/LewisW/ansible-symfony-playbook.git
 git merge --squash ansible/master
 ```
 
+## Creating inventory files
+You can create as many inventories as you see fit, but there is special behaviour for production and staging groups, so it's recommended you create them.
+
+### Build
+The [build inventory](https://github.com/LewisW/ansible-symfony-playbook/blob/master/ansible/inventories/build) comes with this repository. However, by default it will install everything on build. Your project does not need search (elasticsearch), database (mysql), or caching (memcached) then you can remove `build` from the appropriate group, and leave just the heading.
+
+### Staging
+To create a staging inventory, duplicate the [build inventory](https://github.com/LewisW/ansible-symfony-playbook/blob/master/ansible/inventories/build) and change any instances of the word `build` with `staging`. You can then put the IPs/hostnames of any staging servers under the `[staging]` group.
+
+### Production
+To create a production inventory, duplicate the [build inventory](https://github.com/LewisW/ansible-symfony-playbook/blob/master/ansible/inventories/build) and change any instances of the word `build` with `production`. You can then put the IPs/hostnames of any production servers under the `[production]` group.
+
 ## Pulling updates & changes
 From time-to-time, you may wish to merge the upstream changes with your local changes. This process will involve carefully inspecting each upstream change before deciding whether is it appropriate to merge in to your local customisations.
 
