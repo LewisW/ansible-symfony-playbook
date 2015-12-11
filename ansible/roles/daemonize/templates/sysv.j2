@@ -21,7 +21,8 @@ set -e
 
 restart()
 {
-    /sbin/start-stop-daemon $STOP_OPTS
+    # Restart gracefully if there's not a running instance already
+    /sbin/start-stop-daemon $STOP_OPTS || true
     sleep 1
     /sbin/start-stop-daemon $START_OPTS >> $LOGFILE
 }
