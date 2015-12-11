@@ -15,14 +15,13 @@ DAEMON_OPTS="{{daemonize_bin_opts}} {{daemonize_command}} {{daemonize_opts}}"
 START_OPTS="--start --background --make-pidfile --pidfile ${PIDFILE} --chuid {{daemonize_uid}}:{{daemonize_gid}} --exec ${DAEMON} -- ${DAEMON_OPTS}"
 STOP_OPTS="--stop --pidfile ${PIDFILE}"
  
-test -x "$DAEMON" || exit 0
+test -x "$DAEMON" || (echo "Binary $DAEMON does not exist" && exit 1)
  
 set -e
 
 restart()
 {
-    # Restart gracefully if there's not a running instance already
-    /sbin/start-stop-daemon $STOP_OPTS || true
+    /sbin/start-stop-daemon $STOP_OPTS
     sleep 1
     /sbin/start-stop-daemon $START_OPTS >> $LOGFILE
 }
