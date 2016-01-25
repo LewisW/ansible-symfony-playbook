@@ -47,10 +47,10 @@
     - { role: services, tags: ['services'], services: ['beanstalkd'], when: "'beanstalkd' in system_packages" }
     # Start any other services prior
     - { role: services, tags: ['services'] }
-    
-    - { role: versioned-deployment, when: "symfony2_versioned_deployment is defined and symfony2_versioned_deployment|bool" }
 
-    - { role: permissions, when: "skip_permissions is undefined or not skip_permissions|bool" }
+    - { role: versioned-deployment, when: "symfony2_versioned_deployment|default(false)|bool" }
+
+    - { role: permissions, when: "not skip_permissions|default(false)|bool" }
 
     - { role: symfony2 }
 
