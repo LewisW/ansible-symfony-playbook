@@ -30,6 +30,7 @@
     - vars/apache.yml
     - vars/packages.yml
     - vars/ntp.yml
+    - vars/xdebug.yml
   roles:
     # Install the basic server
     - { role: system-packages }
@@ -54,6 +55,8 @@
 
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
+
+    - { role: geerlingguy.php-xdebug, sudo: yes, when: 'php_xdebug|default(false)|bool' }
 
 - hosts: cache
   sudo: yes
@@ -80,16 +83,6 @@
     - { role: rackspace-monitoring }
     - { role: alekseyp.papertrail }
     - { role: firewall }
-
-# Vagrant
-- hosts: vagrant
-  sudo: true
-  vars_files:
-    - ../app/config/parameters.yml.dist
-    - vars/xdebug.yml
-  roles:
-    - { role: geerlingguy.php }
-    - { role: geerlingguy.php-xdebug }
 
 # Database servers
 - hosts: dbserver
