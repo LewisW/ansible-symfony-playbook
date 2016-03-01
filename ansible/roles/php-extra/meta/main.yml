@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Lewis Wright
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+  - name: Debian
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
