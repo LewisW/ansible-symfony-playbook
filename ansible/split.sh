@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git subsplit init git@github.com:LewisW/ansible-symfony-playbook.git
 git subsplit publish "
 ansible/roles/apache-extra:git@github.com:vivait/ansible-apache-extra.git
 ansible/roles/backup:git@github.com:vivait/ansible-backup.git
@@ -18,3 +19,5 @@ ansible/roles/symfony2:git@github.com:vivait/ansible-symfony2.git
 ansible/roles/system-packages:git@github.com:vivait/ansible-system-packages.git
 ansible/roles/versioned-deployment:git@github.com:vivait/ansible-versioned-deployment.git
 " --heads=master
+
+rm -rf .subsplit/
