@@ -53,8 +53,14 @@
 - src: https://github.com/vivait/ansible-versioned-deployment.git
   name: versioned-deployment
 
+- src: https://github.com/vivait/ansible-system-packages.git
+  name: system-packages
+
 - src: https://github.com/vivait/ansible-symfony2.git
   name: symfony2
+
+- src: https://github.com/vivait/ansible-ssh.git
+  name: ssh
 
 - src: https://github.com/vivait/ansible-services.git
   name: services
@@ -91,6 +97,3 @@
 
 - src: https://github.com/vivait/ansible-apache-extra.git
   name: apache-extra
-
-- src: https://github.com/vivait/ansible-system-packages.git
-  name: system-packages
