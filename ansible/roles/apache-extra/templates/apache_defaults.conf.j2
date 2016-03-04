@@ -1,8 +1,0 @@
-ServerName localhost
-{% if http_user is defined %}
-User {{http_user}}
-{% endif %}
-
-{% if syslog_name %}
-ErrorLog syslog:{{syslog_name}}
-{% endif %}

@@ -1,2 +1,0 @@
-session.save_handler = memcached
-session.save_path = "{{override_parameters.session_memcached_host|default(parameters.session_memcached_host)}}:{{override_parameters.session_memcached_port|default(parameters.session_memcached_port)}}"

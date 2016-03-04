@@ -1,6 +1,0 @@
----
-- name: Copy over git prompt
-  copy: src=.git-prompt.sh dest="{{ ansible_env['HOME'] }}/.git-prompt.sh" owner="{{ ansible_user_id }}" group="{{ ansible_user_id }}" mode=0644
-
-- name: Copy over the .bashrc
-  template: src=.bashrc dest="{{ ansible_env['HOME'] }}/.bash_aliases" owner="{{ ansible_user_id }}" group="{{ ansible_user_id }}" mode=0644

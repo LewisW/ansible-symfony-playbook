@@ -1,4 +1,0 @@
----
-symfony2_project_release: dev-master
-backup_rds_instances: []
-backup_mysql_databases: []

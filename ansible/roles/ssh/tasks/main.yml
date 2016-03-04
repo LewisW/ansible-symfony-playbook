@@ -1,8 +1,0 @@
----
-- name: Create the SSH directory.
-  file: state=directory path=/root/.ssh/
-  when: ssh_deployment_key is defined
-
-- name: Upload SSH key.
-  copy: src={{ ssh_deployment_key }} dest=/root/.ssh/deployment_id_rsa mode=0600
-  when: ssh_deployment_key is defined
