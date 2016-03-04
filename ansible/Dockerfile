@@ -8,7 +8,7 @@ RUN mkdir -p app/config && echo "parameters: []" > app/config/parameters.yml.dis
 
 # Copy the role requirements and run them
 COPY install-dependencies.sh ansible/install-dependencies.sh
-COPY requirements.txt ansible/requirements.txt
+COPY requirements.yml ansible/requirements.yml
 RUN /ansible_dependencies
 
 # Copy any files used in provisioning & provision

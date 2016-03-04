@@ -9,7 +9,7 @@ RUN /composer_oauth github-oauth.token
 
 # Copy the role requirements and run them
 COPY ansible/install-dependencies.sh ansible/install-dependencies.sh
-COPY ansible/requirements.txt ansible/requirements.txt
+COPY ansible/requirements.yml ansible/requirements.yml
 RUN /ansible_dependencies
 
 # Copy any files used in provisioning & provision
