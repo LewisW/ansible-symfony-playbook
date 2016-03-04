@@ -1,0 +1,93 @@
+- src: geerlingguy.apache
+  version: 1.4.1
+
+- src: geerlingguy.composer
+  version: 1.2.0
+
+- src: geerlingguy.firewall
+  version: 1.0.5
+
+- src: geerlingguy.git
+  version: 1.0.4
+
+- src: geerlingguy.mysql
+  version: 1.6.9
+
+- src: geerlingguy.ntp
+  version: 1.0.4
+
+- src: geerlingguy.php
+  version: 1.9.2
+
+- src: geerlingguy.php-xdebug
+  version: 1.1.3
+
+- src: geerlingguy.java
+  version: 1.1.1
+
+- src: geerlingguy.elasticsearch
+  version: 1.0.5
+
+- src: geerlingguy.memcached
+  version: 1.0.3
+
+- src: franklinkim.newrelic
+  version: 1.1.0
+
+- src: franklinkim.php5-newrelic
+  version: 1.1.0
+
+- src: AbdoulNdiaye.Blackfire
+  version: v1.0.2
+
+- src: geerlingguy.repo-epel
+
+- src: geerlingguy.repo-remi
+
+- src: mashimom.oh-my-zsh
+
+- src: alekseyp.papertrail
+  version: v0.2
+
+# Internal
+- src: https://github.com/vivait/ansible-versioned-deployment.git
+  name: versioned-deployment
+
+- src: https://github.com/vivait/ansible-symfony2.git
+  name: symfony2
+
+- src: https://github.com/vivait/ansible-services.git
+  name: services
+
+- src: https://github.com/vivait/ansible-rackspace-monitoring.git
+  name: rackspace-monitoring
+
+- src: https://github.com/vivait/ansible-php-twig.git
+  name: php-twig
+
+- src: https://github.com/vivait/ansible-php-extra.git
+  name: php-extra
+
+- src: https://github.com/vivait/ansible-permissions.git
+  name: permissions
+
+- src: https://github.com/vivait/ansible-migrate.git
+  name: migrate
+
+- src: https://github.com/vivait/ansible-firewall.git
+  name: firewall
+
+- src: https://github.com/vivait/ansible-daemonize.git
+  name: daemonize
+
+- src: https://github.com/vivait/ansible-cachetool.git
+  name: cachetool
+
+- src: https://github.com/vivait/ansible-bash.git
+  name: bash
+
+- src: https://github.com/vivait/ansible-backup.git
+  name: backup
+
+- src: https://github.com/vivait/ansible-apache-extra.git
+  name: apache-extra

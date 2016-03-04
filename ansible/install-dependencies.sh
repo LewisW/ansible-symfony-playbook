@@ -14,4 +14,4 @@ else
 	ROLES=
 fi
 
-sudo ansible-galaxy install -r requirements.txt --ignore-errors --force $ROLES
+sudo ansible-galaxy install -r requirements.yml --ignore-errors --force $ROLES
