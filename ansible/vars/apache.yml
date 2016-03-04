@@ -2,6 +2,10 @@
 apache_packages: [apache2, apache2-utils]
 php_enable_apc: false
 
+php_version_path: "{{ 'php/7.0' if 'php7.0' in php_packages else 'php5' }}
+__php_conf_path: "/etc/{{ php_version_path }}/{{ 'fpm' if php_enable_webserver and php_enable_php_fpm else 'apache2' if php_enable_webserver and php_webserver_daemon == 'apache2' else 'cli' }}"
+__php_extension_conf_path: "{{ __php_conf_path }}/conf.d"
+
 php_use_managed_ini: false
 
 php_opcache_enabled_in_ini: true
