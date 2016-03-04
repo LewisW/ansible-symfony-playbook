@@ -40,6 +40,8 @@
     - { role: geerlingguy.apache, sudo: yes }
     - { role: apache-extra, sudo: yes }
     - { role: geerlingguy.php, sudo: yes }
+    # Install composer
+    - { role: geerlingguy.composer, sudo: yes }
     - { role: php-extra, sudo: yes }
     - { role: php-twig, sudo: yes }
 
@@ -47,11 +49,8 @@
     - { role: geerlingguy.git, sudo: yes }
     - { role: ssh }
 
-    # Install composer
-    - { role: geerlingguy.composer, sudo: yes }
-
     # Install cachetool
-    - { role: cachetool, sudo: yes, when: php_opcache_enabled_in_ini|bool }
+    - { role: cachetool, sudo: yes, when: php_opcache_enabled_in_ini }
 
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
