@@ -39,11 +39,13 @@
     #    - { role: mashimom.oh-my-zsh, ohmyzsh_theme: "lambda", ohmyzsh.user: ansible_ssh_user }
     - { role: geerlingguy.apache, sudo: yes }
     - { role: apache-extra, sudo: yes }
+    
     - { role: geerlingguy.php, sudo: yes }
-    # Install composer
     - { role: geerlingguy.composer, sudo: yes }
-    - { role: php-extra, sudo: yes }
+    - { role: geerlingguy.php-xdebug, sudo: yes, when: 'php_xdebug|default(false)|bool' }
+    
     - { role: php-twig, sudo: yes }
+    - { role: php-extra, sudo: yes }
 
     # Install GIT and add our server to known hosts
     - { role: geerlingguy.git, sudo: yes }
@@ -54,8 +56,6 @@
 
     # Install blackfire
     - { role: AbdoulNdiaye.Blackfire, sudo: yes, when: 'blackfire_server_id is defined' }
-
-    - { role: geerlingguy.php-xdebug, sudo: yes, when: 'php_xdebug|default(false)|bool' }
 
 - hosts: cache
   sudo: yes
